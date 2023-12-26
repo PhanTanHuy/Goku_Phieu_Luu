@@ -1,0 +1,39 @@
+#canvas {
+    height: 500px;
+    width: 800px;
+    border: solid #000000;
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* background-image: url(./background.png); */
+}
+
+.--skill {
+    height: 10vh;
+    background-color: black;
+    position: relative;
+    top: 87vh;
+    width: 100%;
+}
+.-skill {
+    height: 100%;
+    background-color: aqua;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+.odichuyen {
+    background-color: red;
+    height: 100%;
+}
+.oskill {
+    background-color: #6a5af9;
+    display: flex;
+}
+.skill {
+    border: solid black;
+    height: 100%;
+    color: white;
+    text-align: center;
+    padding-top: 10px; font-weight: bolder;
+}
