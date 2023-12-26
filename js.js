@@ -1,5 +1,11 @@
 // âm thanh
-var nhacnen = document.getElementById('myAudio'); 
+
+var nhacnen = new Audio('./sound/theme.mp3');
+nhacnen.play();
+nhacnen.addEventListener('ended', function() {
+    nhacnen.currentTime = 0;
+    nhacnen.play();
+})
 // Đặt âm lượng thành 0.5 (50%)
 nhacnen.volume = 0.2;
 var sounds = [
