@@ -8,7 +8,7 @@ nhacnen.play();
 //     nhacnen.play();
 // })
 // Đặt âm lượng thành 0.5 (50%)
-nhacnen.volume = 0.3;
+nhacnen.volume = 0.25;
 var sounds = [
     new Audio('./sound/kamehaCut2.mp3'),
     new Audio('./sound/kick2.mp3'),
