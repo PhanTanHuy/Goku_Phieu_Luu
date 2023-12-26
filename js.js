@@ -47,7 +47,29 @@ var skill1 = document.getElementById('skill1');
 var skill2 = document.getElementById('skill2');
 var skill3 = document.getElementById('skill3');
 
-
+var  amthanh = document.getElementById('amthanh');
+var  amthanh1 = document.getElementById('amthanh1');
+var tatNhac = true;
+amthanh1.addEventListener('click', function() {
+    if (tatNhac) {
+        nhacnen.volume = 0;
+        for (let i=0; i<sounds.length; i++) {
+            sounds[i].volume = 0;
+        }
+        amthanh.classList.remove('fa-volume-up');
+        amthanh.classList.add('fa-volume-off');
+        tatNhac = false;
+    }
+    else {
+        nhacnen.volume = 0.25;
+        for (let i=0; i<sounds.length; i++) {
+            sounds[i].volume = 1;
+        }
+        amthanh.classList.remove('fa-volume-off');
+        amthanh.classList.add('fa-volume-up');
+        tatNhac = true;
+    }
+});
 // mảng đối tượng skill
 var skills = [
     {

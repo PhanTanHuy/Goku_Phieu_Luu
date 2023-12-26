@@ -53,7 +53,7 @@
 /** ảnh ô skill ***/
 #kameha {
     background-image: url(./skills/skillKame1.png);
-    background-size: cover;
+    background-size: 135%;
     background-position: center center;
     width: 75px;
     margin: 0px 10px 0px 10px;
@@ -82,4 +82,13 @@
 }
 .hieuung {
     transition: all 0.3s linear;
+}
+.amthanh:hover {
+    transition: all 0.3s ease;
+}
+#amthanh {
+    transition: all 0.3s ease;
+}
+.amthanh:hover {
+    background-color: rgb(255, 141, 141) !important;
 }
