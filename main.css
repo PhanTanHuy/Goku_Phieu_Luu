@@ -3,37 +3,83 @@
     width: 800px;
     border: solid #000000;
     position:absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     /* background-image: url(./background.png); */
 }
 
 .--skill {
-    height: 10vh;
+    height: 17vh;
     background-color: black;
     position: relative;
-    top: 87vh;
+    top: 80vh;
     width: 100%;
 }
 .-skill {
-    height: 100%;
-    background-color: aqua;
+    width: 561px;
+    height: 60%;
+    background-color: rgb(255, 115, 0);
     margin-left: 15%;
     margin-right: 15%;
 }
 .odichuyen {
-    background-color: red;
+    background-color: rgb(0, 132, 255);
     height: 100%;
+    border-right: solid;
 }
 .oskill {
-    background-color: #6a5af9;
     display: flex;
 }
 .skill {
+    border-radius: 5px;
     border: solid black;
     height: 100%;
-    color: white;
+    color: rgb(0, 0, 0);
+    font-weight: bolder;
+    font-size: xx-large;
     text-align: center;
-    padding-top: 10px; font-weight: bolder;
+    font-weight: bolder;
+    position: relative;
+    background-color: rgb(190, 51, 0);
+}
+.-skill-input {
+    width: 561px;
+    height: 40%;
+    background-color: rgb(255, 115, 0);
+    margin-left: 15%;
+    margin-right: 15%;
+}
+/** ảnh ô skill ***/
+#kameha {
+    background-image: url(./skills/skillKame1.png);
+    background-size: cover;
+    background-position: center center;
+    width: 75px;
+    margin: 0px 10px 0px 10px;
+}
+#kick {
+    background-image: url(./skills/kick.png);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 75px;
+}
+#flyFast {
+    background-image: url(./skills/flyFast.png);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 75px;
+}
+.hoichieu {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.618);
+}
+.hieuung {
+    transition: all 0.3s linear;
 }

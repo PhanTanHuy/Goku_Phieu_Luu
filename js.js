@@ -42,15 +42,23 @@ var dem = 0;
 // điểm bắt đầu vẽ
 var vitriXcanvas = 300;
 var vitriYcanvas = 310;
+// lấy id skill từ css để hồi skill
+var skill1 = document.getElementById('skill1');
+var skill2 = document.getElementById('skill2');
+var skill3 = document.getElementById('skill3');
+
+
 // mảng đối tượng skill
 var skills = [
     {
         tenSkill: 'Bay tới nhanh',
         isUse: true,
         tgHoiChieu: 10,
+        blackbkgr: skill1,
         hoiChieu: function() {
             setTimeout(() => {
                 skills[0].isUse = true;
+                skills[0].blackbkgr.classList.remove('hoichieu');
                 console.log(skills[0].isUse);
             }, 10000)
         },
@@ -139,28 +147,7 @@ var GokuLon = [
         fristPX: 5,
         SpaceFrameY: 550
     },
-    
-    // {
-    //     trangthai: 'Đá2',
-    //     soKhungHinh: 8,
-    //     chieurong: 70,
-    //     chieucao: 80,
-    //     vitriX: vitriXcanvas,
-    //     vitriY: vitriYcanvas,
-    //     fristPX: 166,
-    //     SpaceFrameY: 550
-    // },
 
-    // {
-    //     trangthai: 'Đá3',
-    //     soKhungHinh: 2,
-    //     chieurong: 53,
-    //     chieucao: 80,
-    //     vitriX: vitriXcanvas,
-    //     vitriY: vitriYcanvas,
-    //     fristPX: 726,
-    //     SpaceFrameY: 550
-    // },
 ];
 // Ảnh lật ngược
 var GokuLon180 = [
@@ -306,7 +293,7 @@ animate();
 var isKeyUpFly = true;
 var Chay = false;
 document.addEventListener('keydown', function(e) {
-    if (e.keyCode === 39) {
+    if (e.keyCode === 39 || e.key === 'd') {
        if (!GokuLon0.flyFast) {
             idx = 1;
             flip = 0;
@@ -325,7 +312,7 @@ document.addEventListener('keydown', function(e) {
        }
         
     }
-    if (e.keyCode === 37) {
+    if (e.keyCode === 37 || e.key === 'a') {
         if (!GokuLon0.flyFast) {
             idx = 1;
             flip = 1;
@@ -342,9 +329,19 @@ document.addEventListener('keydown', function(e) {
             }
         }
     }
-    
+    // Sờ killlllll/////////////////////////////////////////
     if (e.key === '1') {
         if (skills[0].isUse) {
+            // thời gian hồi background
+            skill1.classList.add('hoichieu');
+            let soGiay = skills[0].tgHoiChieu - 0.3;
+            if (soGiay > 0) {
+                setInterval(() => {
+                    skill1.style.height = (soGiay/skills[0].tgHoiChieu)*100 + '%';
+                    soGiay -= 0.3;
+                }, 300);
+            }
+
             idx = 2;
             flip = 0;
             bkgrSpeed = 50;
@@ -364,6 +361,16 @@ document.addEventListener('keydown', function(e) {
     }
     if (e.key === '2') {
         if (skills[1].isUse) {
+            // thời gian hồi background
+            skill2.classList.add('hoichieu');
+            let soGiay = skills[1].tgHoiChieu - 0.3;
+            if (soGiay > 0) {
+                setInterval(() => {
+                    skill2.style.height = (soGiay/skills[1].tgHoiChieu)*100 + '%';
+                    soGiay -= 0.3;
+                }, 300);
+            }
+
             if (isSkill2) sounds[0].play();
             GokuLon0.kameha = true;
             flip = 0;
@@ -376,6 +383,16 @@ document.addEventListener('keydown', function(e) {
     }
     if (e.key === '3') {
         if (skills[2].isUse) {
+            // thời gian hồi background
+            skill3.classList.add('hoichieu');
+            let soGiay = skills[2].tgHoiChieu - 0.3;
+            if (soGiay > 0) {
+                setInterval(() => {
+                    skill3.style.height = (soGiay/skills[2].tgHoiChieu)*100 + '%';
+                    soGiay -= 0.3;
+                }, 300);
+            }
+
             if (isSkill3) sounds[1].play();
             GokuLon0.kick = true
             flip = 0;
