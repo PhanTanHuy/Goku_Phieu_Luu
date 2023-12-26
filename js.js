@@ -1,13 +1,14 @@
 // âm thanh
 
-var nhacnen = new Audio('./sound/theme.mp3');
+var nhacnen = new Audio();
+nhacnen.src = './sound/theme.mp3';
 nhacnen.play();
-nhacnen.addEventListener('ended', function() {
-    nhacnen.currentTime = 0;
-    nhacnen.play();
-})
+// nhacnen.addEventListener('ended', function() {
+//     nhacnen.currentTime = 0;
+//     nhacnen.play();
+// })
 // Đặt âm lượng thành 0.5 (50%)
-nhacnen.volume = 0.2;
+nhacnen.volume = 0.3;
 var sounds = [
     new Audio('./sound/kamehaCut2.mp3'),
     new Audio('./sound/kick2.mp3'),
