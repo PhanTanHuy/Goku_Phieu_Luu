@@ -2,13 +2,15 @@
 
 var nhacnen = new Audio();
 nhacnen.src = './sound/theme.mp3';
-nhacnen.play();
-// nhacnen.addEventListener('ended', function() {
-//     nhacnen.currentTime = 0;
-//     nhacnen.play();
-// })
-// Đặt âm lượng thành 0.5 (50%)
 nhacnen.volume = 0.25;
+document.addEventListener('keydown', function() {
+    nhacnen.play();
+})
+ nhacnen.addEventListener('ended', function() {
+    nhacnen.currentTime = 0;
+    nhacnen.play();
+})
+
 var sounds = [
     new Audio('./sound/kamehaCut2.mp3'),
     new Audio('./sound/kick2.mp3'),
@@ -40,6 +42,45 @@ var dem = 0;
 // điểm bắt đầu vẽ
 var vitriXcanvas = 300;
 var vitriYcanvas = 310;
+// mảng đối tượng skill
+var skills = [
+    {
+        tenSkill: 'Bay tới nhanh',
+        isUse: true,
+        tgHoiChieu: 10,
+        hoiChieu: function() {
+            setTimeout(() => {
+                skills[0].isUse = true;
+                console.log(skills[0].isUse);
+            }, 10000)
+        },
+    },
+///////////////////////////
+    {
+        tenSkill: 'Kameha',
+        isUse: true,
+        tgHoiChieu: 7,
+        hoiChieu: function() {
+            setTimeout(() => {
+                skills[1].isUse = true;
+                console.log(skills[1].isUse);
+            }, 7000)
+        }, 
+    },
+/////////////////////////////
+    {
+        tenSkill: 'Đá',
+        isUse: true,
+        tgHoiChieu: 5,
+        hoiChieu: function() {
+            setTimeout(() => {
+                skills[2].isUse = true;
+                console.log(skills[2].isUse);
+            }, 5000)
+        },
+    },
+];
+// mảng đối tượng Goku
 var GokuLon = [
    {
         trangthai: 'Đứng',
@@ -65,6 +106,7 @@ var GokuLon = [
     
     {
         trangthai: 'Bay tới nhanh',
+        flyFast: false,
         soKhungHinh: 2,
         chieurong: 70,
         chieucao: 80,
@@ -201,6 +243,7 @@ function animate() {
             GokuLon0.kameha = false;
             idx = 0;
             isSkill3 = true;
+            if (GokuLon0.flyFast) idx = 2;
         }
         console.log(frameX2);
         ctx.drawImage(arrGokuImg[flip], diemBatDau + GokuLon0[flip][idx].chieurong * frameX2, GokuLon0[flip][idx].SpaceFrameY, GokuLon0[flip][idx].chieurong, GokuLon0[flip][idx].chieucao, GokuLon0[flip][idx].vitriX, GokuLon0[flip][idx].vitriY, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2);
@@ -236,6 +279,7 @@ function animate() {
             GokuLon0.kick = false;
             idx = 0;
             isSkill2 = true;
+            if (GokuLon0.flyFast) idx = 2;
         }
         console.log(frameX2);
         ctx.drawImage(arrGokuImg[flip], diemBatDau + GokuLon0[flip][idx].chieurong * frameX2, GokuLon0[flip][idx].SpaceFrameY, GokuLon0[flip][idx].chieurong, GokuLon0[flip][idx].chieucao, GokuLon0[flip][idx].vitriX, GokuLon0[flip][idx].vitriY, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2);
@@ -259,72 +303,116 @@ function animate() {
 animate();
 
 // lắng nghe sự kiện, isPress để di chuyển background
-var Chay = false
+var isKeyUpFly = true;
+var Chay = false;
 document.addEventListener('keydown', function(e) {
     if (e.keyCode === 39) {
-        idx = 1;
-        flip = 0;
-        isPress = true;
-        Chay = isPress;
-        if (isPress) {
-            sounds[2].play();
-            
-            if (sounds[2].currentTime > 1) {
-                // Đặt lại thời điểm phát về 0 để phát lại từ đầu
-                sounds[2].currentTime = 0.708 - 0.25;
-                // Bắt đầu phát lại
+       if (!GokuLon0.flyFast) {
+            idx = 1;
+            flip = 0;
+            isPress = true;
+            Chay = isPress;
+            if (isPress) {
                 sounds[2].play();
+                
+                if (sounds[2].currentTime > 1) {
+                    // Đặt lại thời điểm phát về 0 để phát lại từ đầu
+                    sounds[2].currentTime = 0.708 - 0.25;
+                    // Bắt đầu phát lại
+                    sounds[2].play();
+                }
             }
-        }
+       }
         
     }
     if (e.keyCode === 37) {
-        idx = 1;
-        flip = 1;
-        isPress = true;
-        if (isPress) {
-            sounds[2].play();
-            
-            if (sounds[2].currentTime > 1) {
-                // Đặt lại thời điểm phát về 0 để phát lại từ đầu
-                sounds[2].currentTime = 0.708 - 0.25;
-                // Bắt đầu phát lại
+        if (!GokuLon0.flyFast) {
+            idx = 1;
+            flip = 1;
+            isPress = true;
+            if (isPress) {
                 sounds[2].play();
+                
+                if (sounds[2].currentTime > 1) {
+                    // Đặt lại thời điểm phát về 0 để phát lại từ đầu
+                    sounds[2].currentTime = 0.708 - 0.25;
+                    // Bắt đầu phát lại
+                    sounds[2].play();
+                }
             }
         }
     }
+    
     if (e.key === '1') {
-        idx = 2;
-        flip = 0;
-        bkgrSpeed = 50;
-        isPress = true;
-        Chay = isPress;
-        if (isPress && Chay) {
-            sounds[3].play();
-            console.log(sounds[3].currentTime)
+        if (skills[0].isUse) {
+            idx = 2;
+            flip = 0;
+            bkgrSpeed = 50;
+            isPress = true;
+            Chay = isPress;
+            GokuLon0.flyFast = true;
+            if (isPress && Chay) {
+                sounds[3].play();
+                // console.log(sounds[3].currentTime)
+            }
+            skills[0].hoiChieu();
+            skills[0].isUse = false;
+        }
+        else {
+            console.log('Đang hồi chiêu!');
         }
     }
     if (e.key === '2') {
-        if (isSkill2) sounds[0].play();
-        GokuLon0.kameha = true;
-        flip = 0;;
+        if (skills[1].isUse) {
+            if (isSkill2) sounds[0].play();
+            GokuLon0.kameha = true;
+            flip = 0;
+            skills[1].hoiChieu();
+            skills[1].isUse = false;
+        }
+        else {
+            console.log('Đang hồi chiêu!');
+        }
     }
     if (e.key === '3') {
-        if (isSkill3) sounds[1].play();
-        GokuLon0.kick = true
-        flip = 0;
+        if (skills[2].isUse) {
+            if (isSkill3) sounds[1].play();
+            GokuLon0.kick = true
+            flip = 0;
+            skills[2].hoiChieu();
+            skills[2].isUse = false;
+        }
+        else {
+            console.log('Đang hồi chiêu!');
+        }
     }
     
     
 });
 document.addEventListener('keyup', function(e) {
-        idx = 0;
-        isPress = false;
-        sounds[2].pause();
-        sounds[2].currentTime = 0;
-        sounds[3].pause();
-        sounds[3].currentTime = 0;
-        bkgrSpeed = 20;
-        Chay = false;
+        if (GokuLon0.flyFast) {
+            if (isKeyUpFly) {
+                isKeyUpFly = false;
+                setTimeout(() => {
+                    GokuLon0.flyFast = false;
+                    isPress = false;
+                    Chay = false;
+                    idx = 0;
+                    bkgrSpeed = 20;
+                    console.log('da ngung bay');
+                    isKeyUpFly = true;
+                }, 5000)
+            }
+        }
+        else {
+            idx = 0;
+            isPress = false;
+            sounds[2].pause();
+            sounds[2].currentTime = 0;
+            sounds[3].pause();
+            sounds[3].currentTime = 0;
+            bkgrSpeed = 20;
+            Chay = false;
+        }
 });
 
