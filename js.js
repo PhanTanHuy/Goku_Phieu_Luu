@@ -25,7 +25,7 @@ sounds.forEach(function(sound) {
 
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
-var canvas_width = canvas.width = 800;
+var canvas_width = canvas.width = 900;
 var canvas_height = canvas.height = 500;
 
 canvas.addEventListener('click', function(e) {
@@ -51,7 +51,7 @@ var frameX2 = 0;
 var dem = 0;
 // điểm bắt đầu vẽ
 var vitriCanvas = {
-    vitriXcanvas: 200,
+    vitriXcanvas: 385,
     vitriYcanvas: 310,
 }
 // var vitriXcanvas = 200;
@@ -102,12 +102,12 @@ var skills = [
     {
         tenSkill: 'Kameha',
         isUse: true,
-        tgHoiChieu: 5,
+        tgHoiChieu: 1,
         hoiChieu: function() {
             setTimeout(() => {
                 skills[1].isUse = true;
                 console.log(skills[1].isUse);
-            }, 5000)
+            }, 1000)
         }, 
     },
 /////////////////////////////
@@ -174,7 +174,7 @@ var GokuLon = [
         fristPX: 1,
         SpaceFrameY: 715,
         // làm cho kame bay ra
-        kameX: vitriCanvas.vitriXcanvas + 150,
+        kameX: vitriCanvas.vitriXcanvas + 100,
         kamejoko(kameXtienlen) {
             ctx.fillRect(kameXtienlen, 355, 50, 50);
             ctx.drawImage(kmImg, 0, 0, 60, 24, kameXtienlen - 60, 355, 120, 50);
@@ -242,7 +242,7 @@ var GokuLon180 = [
         fristPX: 1832,
         SpaceFrameY: 715,
         // làm cho kame bay xa
-        kameX: 260 + vitriCanvas.vitriXcanvas - 50,
+        kameX: 260 + vitriCanvas.vitriXcanvas - 300,
         kamejoko(kameXtienlen) {
             ctx.fillRect(kameXtienlen + 10, 355, 50, 50);
             ctx.drawImage(kmImg180, 0, 0, 60, 24, kameXtienlen, 355, 120, 50);
@@ -324,7 +324,7 @@ var flip = 0;
 // KAMEHAMEHA
 var kameXtienlen0 = GokuLon0[0][3].kameX;
 var kameXtienlen1 = GokuLon0[1][3].kameX;
-var tocdoKameha = 25;
+var tocdoKameha = 20;
 var chuongXongChua = false;
 /////////// tốc đọ hình fps/////////////////////////////////
 var tocdokhunghinh = 5;
@@ -339,9 +339,9 @@ function animate() {
     frameX = vitriFrameX;
     if (flip === 0) {
 
-        GokuLon.forEach(function(ob) {
-            ob.vitriX = 200;
-        })
+        // GokuLon.forEach(function(ob) {
+        //     ob.vitriX = 200;
+        // })
         if (doiChieuChua) {
             var doichieuSmooth = setInterval(() => {
                 anhnen1.startX -= 10;
@@ -357,17 +357,17 @@ function animate() {
         anhnen1.capnhatPhai();
     }
     else { 
-        GokuLon180.forEach(function(ob, index) {
-            if (index >=2 && index <= 3) {
-                ob.vitriX = 620;
-            }
-            else if (index === 4) {
-                ob.vitriX = 600;
-            }
-            else {
-                ob.vitriX = 500;
-            }
-        })
+        // GokuLon180.forEach(function(ob, index) {
+        //     if (index >=2 && index <= 3) {
+        //         ob.vitriX = 620;
+        //     }
+        //     else if (index === 4) {
+        //         ob.vitriX = 600;
+        //     }
+        //     else {
+        //         ob.vitriX = 500;
+        //     }
+        // })
         if (doiChieuChua) {
             var doichieuSmooth = setInterval(() => {
                 anhnen1.startX += 10;
