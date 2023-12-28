@@ -65,6 +65,14 @@
     background-repeat: no-repeat;
     width: 75px;
 }
+#kaioken {
+    background-image: url(./skills/kaioken.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 75px;
+    margin-left: 10px;
+}
 #flyFast {
     background-image: url(./skills/flyFast.png);
     background-size: cover;
