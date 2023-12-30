@@ -130,13 +130,13 @@ var skills = [
     {
         tenSkill: 'Bay tới nhanh',
         isUse: true,
-        tgHoiChieu: 5,
+        tgHoiChieu: 2,
         blackbkgr: skill1,
         hoiChieu: function() {
             setTimeout(() => {
                 skills[0].isUse = true;
                 skills[0].blackbkgr.classList.remove('hoichieu');
-            }, 5000)
+            }, 2000)
         },
     },
 ///////////////////////////
@@ -2569,7 +2569,7 @@ document.addEventListener('keydown', function(e) {
                 }, 50);
                 setTimeout(() => {
                     clearInterval(demnguoc);
-                }, 5000);
+                }, 2000);
             }
             idx = 2;     
             isPress = true;
@@ -2586,7 +2586,7 @@ document.addEventListener('keydown', function(e) {
                     idx = 0;
                     bkgrSpeed = layerspeed;
                     isKeyUpFly = true;
-                }, 800)
+                }, 200)
             }     
             else {
                 bkgrSpeed = 100;
@@ -2600,7 +2600,7 @@ document.addEventListener('keydown', function(e) {
                     idx = 0;
                     bkgrSpeed = layerspeed;
                     isKeyUpFly = true;
-                }, 1400)
+                }, 200)
             }       
 
             if (isPress && Chay) {
@@ -2760,7 +2760,7 @@ document.addEventListener('keyup', function(e) {
                                     bkgrSpeed = layerspeed;
                                     isKeyUpFly = true;
                                     baynhanh = true;
-                                }, 700)
+                                }, 200)
                                }
                                else {
                                     isKeyUpFly = false;
@@ -2772,7 +2772,7 @@ document.addEventListener('keyup', function(e) {
                                     layerspeed = 8;
                                     isKeyUpFly = true;
                                     baynhanh = true;
-                                }, 1400)
+                                }, 200)
                                }
                             }
                         }
