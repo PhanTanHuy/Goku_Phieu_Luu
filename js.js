@@ -29,6 +29,8 @@ var sounds = [
     new Audio('./sound/ssjMod1.mp3'),
     new Audio('./sound/ssjMod2.mp3'),
     new Audio('./sound/saitamaPunch.mp3'), //10
+    new Audio('./sound/dichchuyen.mp3'), //11
+
 
 ];
 
@@ -41,7 +43,7 @@ for (let i=0; i<sounds.length; i++) {
         sounds[i].volume = 0.2
     }
     else if (i == 10) {
-        sounds[i].volume = 0.5
+        sounds[i].volume = 0.2
     }
     else {
         sounds[i].volume = 0.5;
@@ -113,7 +115,7 @@ amthanh.addEventListener('click', function() {
                 sounds[i].volume = 0.2
             }
             else if (i == 10) {
-                sounds[i].volume = 0.5
+                sounds[i].volume = 0.2
             }
             else {
                 sounds[i].volume = 0.5;
@@ -189,7 +191,7 @@ var skills = [
                 skills[2].dameKOKkame /= 2.5;
                 console.log('đã hết duy trì Kaioken');
                 layerspeed = 8;
-            }, 15000)
+            }, 10000)
         },
     },
 /////////////////////////////////
@@ -426,12 +428,12 @@ var isQvAttack = false;
 var bkgrSpeed = layerspeed;
 // tạo lớp pờ lây dơ
 class Layer {
-    constructor(anhNen, tocdo) {
+    constructor(anhNen, tocdo, rongThis, caoThis, startYbkgr) {
         this.anhNen = anhNen;
-        this.rong = 1912;
-        this.cao = 500;
+        this.rong = rongThis;
+        this.cao = caoThis;
         this.startX = 0;
-        this.startY = 0;
+        this.startY = startYbkgr;
         this.tocdo = tocdo;
         this.speed = bkgrSpeed * this.tocdo;
     }
@@ -445,19 +447,19 @@ class Layer {
     capnhatTrai() {
         if (isPress && Chay) {
             this.speed = bkgrSpeed * this.tocdo;
-            if (this.startX > this.rong - this.speed) this.startX = 0;
+            if (this.startX > this.rong) this.startX = 0;
             this.startX += this.speed;
         }
     }
     chaySangPhai() {
-        ctx.drawImage(this.anhNen, this.startX - this.rong, this.startY, this.rong, this.cao);
+        ctx.drawImage(this.anhNen, this.startX - this.rong + 1, this.startY, this.rong, this.cao);
+        ctx.drawImage(this.anhNen, this.startX + this.rong - 1 , this.startY, this.rong, this.cao);
         ctx.drawImage(this.anhNen, this.startX, this.startY, this.rong, this.cao);
-        ctx.drawImage(this.anhNen, this.startX + this.rong, this.startY, this.rong, this.cao);
     }
     chaySangTrai() {
-        ctx.drawImage(this.anhNen, this.startX + this.rong, this.startY, this.rong, this.cao);
+        ctx.drawImage(this.anhNen, this.startX + this.rong - 1, this.startY, this.rong, this.cao);
+        ctx.drawImage(this.anhNen, this.startX - this.rong + 1, this.startY, this.rong, this.cao); 
         ctx.drawImage(this.anhNen, this.startX, this.startY, this.rong, this.cao);
-        ctx.drawImage(this.anhNen, this.startX - this.rong, this.startY, this.rong, this.cao);
     }
 
 }
@@ -544,6 +546,8 @@ class QuaiVatKhongLo {
         this.hpGoc = hp;
         this.thanhHP = hp;
         this.qvspeed = qvspeed;
+        this.stop = 0;
+        this.continue = qvspeed;
         this.dameQV = dameQV;
         this.tocdodanhQV = tocdodanhQV;
         this.sangtrai = true;
@@ -593,9 +597,6 @@ class QuaiVatKhongLo {
                 if (randomAttack == this.tocdodanhQV - 1) {
                         SonGoKu.PlayerHP -= this.dameQV;
                         this.isqvAT = true;
-                }
-                else {
-                    console.log('hụt')
                 }
                 sounds[10].play();
                 
@@ -674,12 +675,12 @@ class QuaiVatKhongLo {
         }
         else {
             if (isPress && flip == 0) {
-                if (skills[5].ssjMod) this.xqv -= 20;
+                if (skills[5].ssjMod) this.xqv -= 15;
                 else this.xqv -= layerspeed;
 
             }
             if (isPress && flip == 1) {
-                if (skills[5].ssjMod) this.xqv += 20;
+                if (skills[5].ssjMod) this.xqv += 15;
                 else this.xqv += layerspeed;
             }
         }
@@ -849,9 +850,17 @@ QuaiVatArr.forEach(quaivat => {
 /////////////////////
 var SonGoKu = new QuaiVatKhongLo(0, vitriCanvas.vitriXcanvas, vitriCanvas.vitriYcanvas, canvas_width, canvas_height, 205, 210, 55, 80, 50, 7, 1000);
 ///////////////////////
-var bkgrImg = new Image();
-bkgrImg.src = 'background2.png';
-var anhnen1 = new Layer(bkgrImg, 1); 
+var bkgrImg1 = new Image();
+bkgrImg1.src = 'bkground6.jpg';
+var bkgrImg2 = new Image();
+bkgrImg2.src = 'bkground8.png';
+
+var anhnen1 = new Layer(bkgrImg1, 0.5, 1200, 500, -100); 
+var anhnen2 = new Layer(bkgrImg2, 1, 1200, 500, 25); 
+var ArrBkgr = [];
+ArrBkgr.push(anhnen1)
+ArrBkgr.push(anhnen2)
+
 // ảnh nền
 var isSkill3 = true; 
 var isSkill2 = true;
@@ -867,6 +876,8 @@ var dem1 = 0;
 var dem0 = 0;
 var dem6 = 0;
 var dem7 = 0;
+var dem8 = 0;
+
 
 //
 var idx = 0;
@@ -928,8 +939,10 @@ function animate() {
             doiChieuChua = false;
             batdau = true;
         }
-        anhnen1.chaySangPhai();
-        anhnen1.capnhatPhai();
+        ArrBkgr.forEach(anhnen => {
+            anhnen.chaySangPhai();
+            anhnen.capnhatPhai();
+        })
     }
     else if (flip == 1 || flip == 3) { 
         if (doiChieuChua) {
@@ -942,8 +955,10 @@ function animate() {
             doiChieuChua = false;
             batdau = false;
         }
-        anhnen1.chaySangTrai();
-        anhnen1.capnhatTrai();
+        ArrBkgr.forEach(anhnen =>{
+            anhnen.chaySangTrai();
+            anhnen.capnhatTrai();
+        })
     }
     // Kameha //////////////////////////////////////
     if (SonGoKu.jump && !skills[5].isSsj) {
@@ -984,8 +999,7 @@ function animate() {
         skills[3].demkok++;
     }
     if (skills[5].ssjMod) {
-        SonGoKu.PlayerHP += SonGoKu.PlayerHPGoc*0.0005
-
+        if (SonGoKu.PlayerHP <= SonGoKu.PlayerHPGoc) SonGoKu.PlayerHP += SonGoKu.PlayerHPGoc*0.0005
         sounds[9].play();
         let vitriXkok = Math.floor(skills[3].demkok/2) % 4;
         skills[3].frameXkok = vitriXkok;
@@ -1022,7 +1036,7 @@ function animate() {
             }
         }
         skills[3].demkok++;
-        if (baynhanh) bkgrSpeed = 25;
+        if (baynhanh) bkgrSpeed = 15;
     }
     else {
         sounds[9].currentTime = 0;
@@ -1117,8 +1131,6 @@ function animate() {
             }
         }
         else {
-
-
             if (flip === 0 || flip == 2 ) {
                 if (SonGoKu.isJump) {
                     tocdokhunghinh = 3;
@@ -1261,8 +1273,481 @@ function animate() {
     }
      // Đá ///////////////////////////////////////////////////////
     else if (GokuLon0.kick && isSkill3) {
-        bkgrSpeed = 1;
-        if (!skills[3].kaiokenMod) {
+        bkgrSpeed = 0;
+        if (skills[5].ssjMod) {
+            sounds[7].play();
+            if (flip === 0 || flip == 2) {
+                isSkill2 = false;
+                isSkill4 = false;
+                isSkill5 = false;
+                let vitriFrameX3 = Math.floor(dem8/tocdokhunghinh) % 38;
+                frameX2 = vitriFrameX3
+                let dem3 = tocdokhunghinh*38 - 1;
+                if (frameX2 <= 3) {
+                    ctx.drawImage(arrGokuImg[flip], 13 + 55*frameX2, 895, 55, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 4) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  -= 10*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv -= 10
+                    })
+                    ctx.drawImage(arrGokuImg[flip], 8 + 57*frameX2, 895, 60, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 5) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  -= 10*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv -= 10
+                    })
+                    ctx.drawImage(arrGokuImg[flip], 15 + 57*frameX2, 895, 50, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 6) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  -= 10*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv -= 10
+                    })
+                    ctx.drawImage(arrGokuImg[flip], 5 + 57*frameX2, 895, 50, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 7) {
+                    ctx.drawImage(arrGokuImg[flip], -6 + 57*frameX2, 895, 45, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2 - 10, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 8) {
+                    ctx.drawImage(arrGokuImg[flip], -20 + 57*frameX2, 895, 50, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 9) {
+                    ctx.drawImage(arrGokuImg[flip], -25 + 57*frameX2, 895, 50, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 10) {
+                    sounds[11].play();
+                    ctx.drawImage(arrGokuImg[flip], -30 + 57*frameX2, 882, 50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 11) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  -= 69*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv -= 69
+                    })
+                    ctx.drawImage(arrGokuImg[flip], -45 + 57*frameX2, 882, 20, 80, GokuLon0[flip][idx].vitriX + 10, Ychung - 20, GokuLon0[flip][idx].chieurong * 2 - 60, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 12) {
+                    ctx.drawImage(arrGokuImg[flip], -80 + 57*frameX2, 895, 50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 >= 13 && frameX2 <= 15) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  += 10*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv += 10
+                    })
+                    ctx.drawImage(arrGokuImg[1], 1833 - -705 + -55*frameX2, 450, -55, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 16) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  += 10*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv += 10
+                    })
+                    ctx.drawImage(arrGokuImg[1], 1833 - -705 + -55*frameX2, 450, -65, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 17) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  += 10*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv += 10
+                    })
+                    ctx.drawImage(arrGokuImg[1], 1833 - -686 + -55*frameX2, 450, -55, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 18) {
+                    ctx.drawImage(arrGokuImg[1], 1833 - -675 + -55*frameX2, 450, -65, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 19) {
+                    ctx.drawImage(arrGokuImg[1], 1833 - -660 + -55*frameX2, 450, -65, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 20) {
+                    ctx.drawImage(arrGokuImg[flip], -25 + 57*9, 895, 50, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 21) {
+                    sounds[11].play();
+                    ctx.drawImage(arrGokuImg[flip], -30 + 57*10, 882, 50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 22) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  += 69*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv += 69
+                    })
+                    ctx.drawImage(arrGokuImg[flip], -45 + 57*11, 882, 20, 80, GokuLon0[flip][idx].vitriX + 10, Ychung - 20, GokuLon0[flip][idx].chieurong * 2 - 60, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 23) {
+                    ctx.drawImage(arrGokuImg[flip], -80 + 57*12, 895, 50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 24) {
+                    ctx.drawImage(arrGokuImg[flip], 12 + 57*0, 780, 50, 80, GokuLon0[flip][idx].vitriX, Ychung - 3, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 25) {
+                    ctx.drawImage(arrGokuImg[flip], 10 + 57*1, 780, 50, 80, GokuLon0[flip][idx].vitriX, Ychung - 3, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 26) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  -= 10*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv -= 10
+                    })
+                    ctx.drawImage(arrGokuImg[flip], 5 + 57*2, 780, 50, 80, GokuLon0[flip][idx].vitriX, Ychung - 3, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 27) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  -= 20*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv -= 20
+                    })
+                    ctx.drawImage(arrGokuImg[flip], 3 + 57*3, 780, 50, 80, GokuLon0[flip][idx].vitriX, Ychung - 3, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 28) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  -= 10*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv -= 10
+                    })
+                    ctx.drawImage(arrGokuImg[flip], 2 + 57*4, 780, 50, 80, GokuLon0[flip][idx].vitriX, Ychung - 3, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 29) {
+                    sounds[11].currentTime = 0;
+                    ctx.drawImage(arrGokuImg[flip], -25 + 57*9, 895, 50, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 30) {
+                    sounds[11].play();
+                    ctx.drawImage(arrGokuImg[flip], -30 + 57*10, 882, 50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 31) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  -= 69*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv -= 69
+                    })
+                    ctx.drawImage(arrGokuImg[flip], -45 + 57*11, 882, 20, 80, GokuLon0[flip][idx].vitriX + 10, Ychung - 20, GokuLon0[flip][idx].chieurong * 2 - 60, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 32) {
+                    sounds[11].currentTime = 0;
+                    sounds[11].play();
+
+                    ctx.drawImage(arrGokuImg[flip], -80 + 57*12, 895, 50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                ////
+                if (frameX2 == 33) {
+                    ctx.drawImage(arrGokuImg[1],1833 - 12 + -57*0, 1230, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 120, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 34) {
+                    ctx.drawImage(arrGokuImg[1], 1833 - 5 + -57*1, 1230, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 30, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 35) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  += 20*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv += 20
+                    })
+                    ctx.drawImage(arrGokuImg[1],1833 - 0 -57*2, 1230, -60, 80, GokuLon0[flip][idx].vitriX, Ychung - 30, GokuLon0[flip][idx].chieurong * 2 + 10, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 36) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  += 20*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv += 20
+                    })
+                    ctx.drawImage(arrGokuImg[1],1833 - 3 + -57*3, 1230, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 37) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  += 20*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv += 20
+                    })
+                    ctx.drawImage(arrGokuImg[1],1833 - 7 + -57*4, 1230, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 3, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                // tro ve trang thai ban dau
+                if (frameX2 === 37 && dem3 === dem8) {
+                    sounds[7].pause();
+                    sounds[7].currentTime = 0;
+                    dem8 = -1;
+                    GokuLon0.kick = false;
+                    idx = 0;
+                    isSkill2 = true;
+                    isSkill4 = true;
+                    isSkill5 = true;
+                    if (GokuLon0.flyFast) idx = 2;
+                }
+                dem8++;
+                requestAnimationFrame(animate);
+            }
+            ////////////////////////////////////////////////////
+            else if (flip == 1 || flip == 3){
+                isSkill2 = false;
+                isSkill4 = false;
+                isSkill5 = false;
+                let vitriFrameX3 = Math.floor(dem8/tocdokhunghinh) % 38;
+                frameX2 = vitriFrameX3
+                let dem3 = tocdokhunghinh*38 - 1;
+                if (frameX2 <= 3) {
+                    ctx.drawImage(arrGokuImg[flip], 1833 - 13 + -55*frameX2, 895, -55, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 4) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  += 10*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv += 10
+                    })
+                    ctx.drawImage(arrGokuImg[flip], 1833 -  8 + -57*frameX2, 895, -60, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 5) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  += 10*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv += 10
+                    })
+                    ctx.drawImage(arrGokuImg[flip], 1833 -  15 + -57*frameX2, 895, -50, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 6) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  += 10*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv += 10
+                    })
+                    ctx.drawImage(arrGokuImg[flip], 1833 -  5 + -57*frameX2, 895, -50, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 7) {
+                    ctx.drawImage(arrGokuImg[flip], 1833 -  -6 + -57*frameX2, 895, -45, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2 - 10, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 8) {
+                    ctx.drawImage(arrGokuImg[flip], 1833 -  -20 + -57*frameX2, 895, -50, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 9) {
+                    ctx.drawImage(arrGokuImg[flip], 1833 -  -25 + -57*frameX2, 895, -50, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 10) {
+                    sounds[11].play();
+
+                    ctx.drawImage(arrGokuImg[flip], 1833 -  -30 + -57*frameX2, 882, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 11) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  += 69*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv += 69
+                    })
+                    ctx.drawImage(arrGokuImg[flip], 1833 -  -45 + -57*frameX2, 882, -20, 80, GokuLon0[flip][idx].vitriX + 10, Ychung - 20, GokuLon0[flip][idx].chieurong * 2 - 60, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 12) {
+                    ctx.drawImage(arrGokuImg[flip], 1833 -  -80 + -57*frameX2, 895, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 >= 13 && frameX2 <= 15) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  -= 10*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv -= 10
+                    })
+                    ctx.drawImage(arrGokuImg[0],-705 + 55*frameX2, 450, 55, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 16) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  -= 10*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv -= 10
+                    })
+                    ctx.drawImage(arrGokuImg[0],-705 + 55*frameX2, 450, 65, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 17) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  -= 10*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv -= 10
+                    })
+                    ctx.drawImage(arrGokuImg[0],-686 + 55*frameX2, 450, 55, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 18) {
+                    ctx.drawImage(arrGokuImg[0], -675 + 55*frameX2, 450, 65, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 19) {
+                    ctx.drawImage(arrGokuImg[0],  -660 + 55*frameX2, 450, 65, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 20) {
+                    ctx.drawImage(arrGokuImg[flip], 1833 -  -25 + -57*9, 895, -50, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 21) {
+                    sounds[11].play();
+
+                    ctx.drawImage(arrGokuImg[flip], 1833 -  -30 + -57*10, 882, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 22) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  -= 69*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv -= 69
+                    })
+                    ctx.drawImage(arrGokuImg[flip], 1833 -  -45 + -57*11, 882, -20, 80, GokuLon0[flip][idx].vitriX + 10, Ychung - 20, GokuLon0[flip][idx].chieurong * 2 - 60, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 23) {
+                    ctx.drawImage(arrGokuImg[flip], 1833 -  -80 + -57*12, 895, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 24) {
+                    ctx.drawImage(arrGokuImg[flip], 1833 -  12 + -57*0, 780, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 3, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 25) {
+                    ctx.drawImage(arrGokuImg[flip], 1833 -  10 + -57*1, 780, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 3, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 26) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  += 10*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv += 10
+                    })
+                    ctx.drawImage(arrGokuImg[flip], 1833 -  5 + -57*2, 780, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 3, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 27) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  += 20*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv += 20
+                    })
+                    ctx.drawImage(arrGokuImg[flip], 1833 -  3 + -57*3, 780, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 3, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 28) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  += 10*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv == 10
+                    })
+                    ctx.drawImage(arrGokuImg[flip], 1833 -  2 + -57*4, 780, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 3, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 29) {
+                    sounds[10].currentTime = 0;
+                    ctx.drawImage(arrGokuImg[flip], 1833 -  -25 + -57*9, 895, -50, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 30) {
+                    sounds[11].play();
+                    ctx.drawImage(arrGokuImg[flip],  1833 - -30 + -57*10, 882, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 31) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  += 69*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv += 69
+                    })
+                    ctx.drawImage(arrGokuImg[flip], 1833 -  -37 + -57*11, 882, -20, 80, GokuLon0[flip][idx].vitriX + 10, Ychung - 20, GokuLon0[flip][idx].chieurong * 2 - 60, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 32) {
+                    sounds[11].currentTime = 0;
+                    sounds[11].play();
+                    ctx.drawImage(arrGokuImg[flip], 1833 -  -80 + -57*12, 895, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                ////
+                if (frameX2 == 33) {
+                    ctx.drawImage(arrGokuImg[0],25 - 12 + 57*0, 1230, 50, 80, GokuLon0[flip][idx].vitriX, Ychung - 120, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 34) {
+                    ctx.drawImage(arrGokuImg[0],5 - 5 + 57*1, 1230, 50, 80, GokuLon0[flip][idx].vitriX, Ychung - 30, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 35) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  -= 20*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv -= 20
+                    })
+                    ctx.drawImage(arrGokuImg[0], 57*2, 1230, 60, 80, GokuLon0[flip][idx].vitriX, Ychung - 30, GokuLon0[flip][idx].chieurong * 2 + 10, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 36) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  -= 20*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv -= 20
+                    })
+                    ctx.drawImage(arrGokuImg[0], 6- 3 + 57*3, 1230, 50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                if (frameX2 == 37) {
+                    ArrBkgr.forEach(anhnen => {
+                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        anhnen.startX  -= 20*anhnen.tocdo;
+                    })
+                    QuaiVatArr.forEach(quaivat => {
+                        quaivat.xqv -= 20
+                    })
+                    ctx.drawImage(arrGokuImg[0],15 - 7 + 57*4, 1230, 50, 80, GokuLon0[flip][idx].vitriX, Ychung - 3, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
+                }
+                // tro ve trang thai ban dau
+                if (frameX2 === 37 && dem3 === dem8) {
+                    sounds[7].pause();
+                    sounds[7].currentTime = 0;
+                    dem8 = -1;
+                    GokuLon0.kick = false;
+                    idx = 0;
+                    isSkill2 = true;
+                    isSkill4 = true;
+                    isSkill5 = true;
+                    if (GokuLon0.flyFast) idx = 2;
+                }
+                dem8++;
+                requestAnimationFrame(animate);
+            }
+        }
+        else if (!skills[3].kaiokenMod) {
             if (flip === 0 || flip == 2) {
                 isSkill2 = false;
                 isSkill4 = false;
@@ -1309,10 +1794,11 @@ function animate() {
                     ctx.drawImage(arrGokuImg[flip], diemBatDau + GokuLon0[flip][idx].chieurong * frameX2, GokuLon0[flip][idx].SpaceFrameY, GokuLon0[flip][idx].chieurong, GokuLon0[flip][idx].chieucao, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2);
 
                 }
-                if (bkgrX < -1912) anhnen1.startX = 0;
-                anhnen1.startX  -= 1;
+                ArrBkgr.forEach(anhnen => {
+                    if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                    anhnen.startX  -= 1*anhnen.tocdo;
+                })
                 dem0++;
-                ;
                 requestAnimationFrame(animate);
             }
             else if (flip == 1 || flip == 3){
@@ -1361,8 +1847,10 @@ function animate() {
                     ctx.drawImage(arrGokuImg[flip], diemBatDau + GokuLon0[flip][idx].chieurong * frameX2, GokuLon0[flip][idx].SpaceFrameY, GokuLon0[flip][idx].chieurong, GokuLon0[flip][idx].chieucao, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2);
 
                 }
-                if (bkgrX > 1912) anhnen1.startX = 0;
-                anhnen1.startX  += 1;
+                ArrBkgr.forEach(anhnen => {
+                    if (anhnen.startX  > anhnen.rong) anhnen.startX = 0;
+                    anhnen.startX  += 1*anhnen.tocdo;
+                })
                 dem0++;
                 ;
                 requestAnimationFrame(animate);
@@ -1498,8 +1986,10 @@ function animate() {
                     if (GokuLon0.flyFast) idx = 2;
                 }
                 ctx.drawImage(arrGokuImg[flip], diemBatDau + GokuLon0[flip][idx].chieurong * frameX2, 2295, GokuLon0[flip][idx].chieurong + 1, GokuLon0[flip][idx].chieucao, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2);
-                if (bkgrX < -1912) anhnen1.startX = 0;
-                anhnen1.startX  -= 3;
+                ArrBkgr.forEach(anhnen => {
+                    if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                    anhnen.startX  -= 2*anhnen.tocdo;
+                })
                 dem1++;
                 requestAnimationFrame(animate);
             }
@@ -1633,8 +2123,10 @@ function animate() {
                     if (GokuLon0.flyFast) idx = 2;
                 }
                 ctx.drawImage(arrGokuImg[flip], 1831 -  diemBatDau + GokuLon0[flip][idx].chieurong * frameX2, 2295, GokuLon0[flip][idx].chieurong + 1, GokuLon0[flip][idx].chieucao, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2);
-                if (bkgrX > 1912) anhnen1.startX = 0;
-                anhnen1.startX  += 3;
+                ArrBkgr.forEach(anhnen => {
+                    if (anhnen.startX > anhnen.rong) anhnen.startX = 0;
+                    anhnen.startX  += 2*anhnen.tocdo;
+                })
                 dem1++;
                 requestAnimationFrame(animate);
             }
@@ -1828,7 +2320,7 @@ function animate() {
     }
     ///// SIÊU SAYAN
     else if (skills[5].isSsj) {
-        SonGoKu.PlayerHP += SonGoKu.PlayerHPGoc*0.005
+        if (SonGoKu.PlayerHP <= SonGoKu.PlayerHPGoc) SonGoKu.PlayerHP += SonGoKu.PlayerHPGoc*0.005
          
         if (flip == 0 || flip == 2) {
             let Yssj = 1485;
@@ -2420,7 +2912,7 @@ function animate() {
                 if (!isQvAttack) ctx.drawImage(arrGokuImg[flip], GokuLon0[flip][idx].fristPX + GokuLon0[flip][idx].chieurong * frameX, GokuLon0[flip][idx].SpaceFrameY, GokuLon0[flip][idx].chieurong, GokuLon0[flip][idx].chieucao, GokuLon0[flip][idx].vitriX, SonGoKu.jumpY, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2);   
 
                 if (isQvAttack) {
-                    if (flip == 0) ctx.drawImage(arrGokuImg[0], 10 + GokuLon0[0][0].chieurong * 1, 986, GokuLon0[0][0].chieurong, GokuLon0[1][0].chieucao, GokuLon0[1][0].vitriX, SonGoKu.jumpY, GokuLon0[1][0].chieurong * 2, GokuLon0[1][0].chieucao * 2);
+                    if (flip == 0) ctx.drawImage(arrGokuImg[0], 10 + GokuLon0[0][0].chieurong * 0, 986, GokuLon0[0][0].chieurong, GokuLon0[1][0].chieucao, GokuLon0[1][0].vitriX, SonGoKu.jumpY, GokuLon0[1][0].chieurong * 2, GokuLon0[1][0].chieucao * 2);
                     if (flip == 1) ctx.drawImage(arrGokuImg[1], 1833 + -GokuLon0[1][0].chieurong * 4, 986, GokuLon0[1][0].chieurong, GokuLon0[1][0].chieucao, GokuLon0[1][0].vitriX, SonGoKu.jumpY, GokuLon0[1][0].chieurong * 2, GokuLon0[1][0].chieucao * 2);
                 }         
 
@@ -2469,13 +2961,24 @@ function animate() {
             }
             // đá
             else if (GokuLon0.kick && SonGoKu.ytc + SonGoKu.htc <= quaivat.jumpY + quaivat.hqv + SonGoKu.htc && SonGoKu.ytc + SonGoKu.htc >= quaivat.jumpY) {
-                quaivat.hp -= skills[2].dame*skills[5].dameSSJ;
-                let dayluiquaivat = setInterval(() => {
-                    quaivat.xqv -= 2*KhoangCanhDayLui;
-                }, 100)
-                setTimeout(() => {
-                    clearInterval(dayluiquaivat)
-                }, 300)
+                if (GokuLon0.kick && skills[5].ssjMod) {
+                    quaivat.hp -= skills[2].dame*skills[5].dameSSJ*15;
+                    let dayluiquaivat = setInterval(() => {
+                        quaivat.xqv -= 2*KhoangCanhDayLui;
+                    }, 100)
+                    setTimeout(() => {
+                        clearInterval(dayluiquaivat)
+                    }, 300)
+                }
+                else {
+                    quaivat.hp -= skills[2].dame*skills[5].dameSSJ;
+                    let dayluiquaivat = setInterval(() => {
+                        quaivat.xqv -= 2*KhoangCanhDayLui;
+                    }, 100)
+                    setTimeout(() => {
+                        clearInterval(dayluiquaivat)
+                    }, 300)
+                }
             }
         }
         if (SonGoKu.xtc + 80 + SonGoKu.wtc >= quaivat.xqv && quaivat.xqv >= 45 + 385 && flip == 0) {
@@ -2492,13 +2995,24 @@ function animate() {
             }
             // đá
             else if (GokuLon0.kick && SonGoKu.ytc + SonGoKu.htc <= quaivat.jumpY + quaivat.hqv + SonGoKu.htc && SonGoKu.ytc + SonGoKu.htc >= quaivat.jumpY) {
-                quaivat.hp -= skills[2].dame*skills[5].dameSSJ;
-                let dayluiquaivat = setInterval(() => {
-                    quaivat.xqv += 2*KhoangCanhDayLui;
-                }, 100)
-                setTimeout(() => {
-                    clearInterval(dayluiquaivat)
-                }, 300)
+                if (GokuLon0.kick && skills[5].ssjMod) {
+                    quaivat.hp -= skills[2].dame*skills[5].dameSSJ*15;
+                    let dayluiquaivat = setInterval(() => {
+                        quaivat.xqv -= 2*KhoangCanhDayLui;
+                    }, 100)
+                    setTimeout(() => {
+                        clearInterval(dayluiquaivat)
+                    }, 300)
+                }
+                else {
+                    quaivat.hp -= skills[2].dame*skills[5].dameSSJ;
+                    let dayluiquaivat = setInterval(() => {
+                        quaivat.xqv -= 2*KhoangCanhDayLui;
+                    }, 100)
+                    setTimeout(() => {
+                        clearInterval(dayluiquaivat)
+                    }, 300)
+                }
             }
         }
     })
@@ -2699,7 +3213,7 @@ document.addEventListener('keydown', function(e) {
                 skills[2].dame *= skills[2].dameKOK;
                 skills[2].dameKOKkame *= 2.5;
                 skills[3].kaiokenMod = true;
-                layerspeed = 20;
+                layerspeed = 13;
             }, 500)
             skills[3].hoiChieu();
             skills[3].tatKaiokenMod();
@@ -2717,6 +3231,7 @@ document.addEventListener('keydown', function(e) {
         if (skills[5].isUse && isSkill5 && !skills[3].kaiokenMod) {
             console.log('đã kích hoạt supersayan')
             skill5.classList.add('hoichieu');
+            skill4.classList.add('hoichieu');
             // // thời gian hồi background;
             let soGiay = skills[5].tgHoiChieu - 0.05;
             let demnguoc = setInterval(() => {
