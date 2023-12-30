@@ -1,6 +1,6 @@
 #canvas {
     height: 500px;
-    width: 800px;
+    width: 900px;
     border: solid #000000;
     position:absolute;
     top: 40%;
@@ -10,14 +10,14 @@
 }
 
 .--skill {
-    height: 17vh;
+    height: 20vh;
     background-color: black;
     position: relative;
     top: 80vh;
     width: 100%;
 }
 .-skill {
-    width: 561px;
+    width: 700px;
     height: 60%;
     background-color: rgb(255, 115, 0);
     margin-left: 15%;
@@ -44,7 +44,7 @@
     background-color: rgb(190, 51, 0);
 }
 .-skill-input {
-    width: 561px;
+    width: 700px;
     height: 40%;
     background-color: rgb(255, 115, 0);
     margin-left: 15%;
@@ -52,9 +52,11 @@
 }
 /** ảnh ô skill ***/
 #kameha {
+    background-color:  white;
     background-image: url(./skills/skillKame1.png);
     background-size: 135%;
     background-position: center center;
+    background-repeat: no-repeat;
     width: 75px;
     margin: 0px 10px 0px 10px;
 }
@@ -67,6 +69,14 @@
 }
 #kaioken {
     background-image: url(./skills/kaioken.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 75px;
+    margin-left: 10px;
+}
+#ssj {
+    background-image: url(./skills/ssj.jfif);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
