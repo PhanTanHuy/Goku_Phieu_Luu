@@ -30,8 +30,7 @@ var sounds = [
     new Audio('./sound/ssjMod2.mp3'),
     new Audio('./sound/saitamaPunch.mp3'), //10
     new Audio('./sound/dichchuyen.mp3'), //11
-
-
+    new Audio('./sound/kamehamehaBig.mp3'), //12
 ];
 
 
@@ -44,6 +43,9 @@ for (let i=0; i<sounds.length; i++) {
     }
     else if (i == 10) {
         sounds[i].volume = 0.2
+    }
+    else if (i == 12) {
+        sounds[i].volume = 1
     }
     else {
         sounds[i].volume = 0.5;
@@ -117,6 +119,9 @@ amthanh.addEventListener('click', function() {
             else if (i == 10) {
                 sounds[i].volume = 0.2
             }
+            else if (i == 12) {
+                sounds[i].volume = 1
+            }
             else {
                 sounds[i].volume = 0.5;
             }
@@ -132,13 +137,13 @@ var skills = [
     {
         tenSkill: 'Bay tới nhanh',
         isUse: true,
-        tgHoiChieu: 2,
+        tgHoiChieu: 1,
         blackbkgr: skill1,
         hoiChieu: function() {
             setTimeout(() => {
                 skills[0].isUse = true;
                 skills[0].blackbkgr.classList.remove('hoichieu');
-            }, 2000)
+            }, 1000)
         },
     },
 ///////////////////////////
@@ -520,8 +525,9 @@ class QuaiVatKhongLo {
         //khung avt
         ctx.strokeRect(0 , 0, 100, 100)
     }
-    drawtancong(wtc, htc, traiHayphai, ytc) {
-        this.xtc = this.vitriXcanvasQVKL;
+    drawtancong(wtc, htc, traiHayphai, ytc, plusWssj) {
+        this.plusWssj = plusWssj;
+        this.xtc = this.vitriXcanvasQVKL  - this.plusWssj;
         this.ytc = ytc;
         this.wtc = wtc;
         this.htc = htc;
@@ -554,6 +560,7 @@ class QuaiVatKhongLo {
         this.sangphai = false;
         this.speedframe = spf;
         this.demQV = 0;
+        this.kameKaioken = 0;
     }
     // vẽ quái vật gồm có máu, di chuyển đến ng chơi và tấn công
    
@@ -606,56 +613,56 @@ class QuaiVatKhongLo {
                             // ctx.fillRect(this.xqv + this.wqv, this.yqv, 100, 100)
                             switch(frameXSTM) {
                                 case 0:
-                                    ctx.drawImage(saitama0, 97 + 60*0, 1990, 60, 57, this.xqv, this.jumpY + 25, this.wqv + 30, this.hqv - 20)
+                                    ctx.drawImage(saitama0, 97 + 60*0, 1990, 60, 57, this.xqv, this.jumpY + 25 + this.kameKaioken, this.wqv + 30, this.hqv - 20)
                                     break;
                                 case 1:
-                                    ctx.drawImage(saitama0, 97 + 60*1, 1990, 60, 57, this.xqv, this.jumpY + 25, this.wqv + 30, this.hqv - 20)
+                                    ctx.drawImage(saitama0, 97 + 60*1, 1990, 60, 57, this.xqv, this.jumpY + 25 + this.kameKaioken, this.wqv + 30, this.hqv - 20)
                                     break;
                                 case 2:
-                                    ctx.drawImage(saitama0, 105 + 60*2, 1990, 60, 57, this.xqv, this.jumpY + 25, this.wqv + 30, this.hqv - 20)
+                                    ctx.drawImage(saitama0, 105 + 60*2, 1990, 60, 57, this.xqv, this.jumpY + 25 + this.kameKaioken, this.wqv + 30, this.hqv - 20)
                                     break;
                                 case 3:
-                                    ctx.drawImage(saitama0, 109 + 60*3, 1990, 60, 57, this.xqv, this.jumpY + 25, this.wqv + 30, this.hqv - 20)
+                                    ctx.drawImage(saitama0, 109 + 60*3, 1990, 60, 57, this.xqv, this.jumpY + 25 + this.kameKaioken, this.wqv + 30, this.hqv - 20)
                                     break;
                                 case 4:
-                                    ctx.drawImage(saitama0, 113 + 60*4, 1990, 60, 57, this.xqv, this.jumpY + 25, this.wqv + 30, this.hqv - 20)
+                                    ctx.drawImage(saitama0, 113 + 60*4, 1990, 60, 57, this.xqv, this.jumpY + 25 + this.kameKaioken, this.wqv + 30, this.hqv - 20)
                                     break;
                                 case 5:
-                                    ctx.drawImage(saitama0, 113 + 60*5, 1990, 60, 57, this.xqv, this.jumpY + 25, this.wqv + 30, this.hqv - 20)
+                                    ctx.drawImage(saitama0, 113 + 60*5, 1990, 60, 57, this.xqv, this.jumpY + 25 + this.kameKaioken, this.wqv + 30, this.hqv - 20)
                                     break;
                                 case 6:
-                                    ctx.drawImage(saitama0, 113 + 50*6, 1990, 60, 57, this.xqv, this.jumpY + 25, this.wqv + 30, this.hqv - 20)
+                                    ctx.drawImage(saitama0, 113 + 50*6, 1990, 60, 57, this.xqv, this.jumpY + 25 + this.kameKaioken, this.wqv + 30, this.hqv - 20)
                                     break;
                                 case 7:
-                                    ctx.drawImage(saitama0, 113 + 60*7, 1990, 60, 57, this.xqv, this.jumpY + 25, this.wqv + 30, this.hqv - 20)
+                                    ctx.drawImage(saitama0, 113 + 60*7, 1990, 60, 57, this.xqv, this.jumpY + 25 + this.kameKaioken, this.wqv + 30, this.hqv - 20)
                                     break;
                             }
                         }
                         else {
                             switch(frameXSTM) {
                                 case 0:
-                                    ctx.drawImage(saitama180, 1009 -  97 + -60*0, 1990, -60, 57, this.xqv, this.jumpY + 25, this.wqv + 30, this.hqv - 20)
+                                    ctx.drawImage(saitama180, 1009 -  97 + -60*0, 1990, -60, 57, this.xqv, this.jumpY + 25 + this.kameKaioken, this.wqv + 30, this.hqv - 20)
                                     break;
                                 case 1:
-                                    ctx.drawImage(saitama180, 1009 -  97 + -60*1, 1990, -60, 57, this.xqv, this.jumpY + 25, this.wqv + 30, this.hqv - 20)
+                                    ctx.drawImage(saitama180, 1009 -  97 + -60*1, 1990, -60, 57, this.xqv, this.jumpY + 25 + this.kameKaioken, this.wqv + 30, this.hqv - 20)
                                     break;
                                 case 2:
-                                    ctx.drawImage(saitama180, 1009 -  105 + -60*2, 1990, -60, 57, this.xqv, this.jumpY + 25, this.wqv + 30, this.hqv - 20)
+                                    ctx.drawImage(saitama180, 1009 -  105 + -60*2, 1990, -60, 57, this.xqv, this.jumpY + 25 + this.kameKaioken, this.wqv + 30, this.hqv - 20)
                                     break;
                                 case 3:
-                                    ctx.drawImage(saitama180, 1009 -  109 + -60*3, 1990, -60, 57, this.xqv, this.jumpY + 25, this.wqv + 30, this.hqv - 20)
+                                    ctx.drawImage(saitama180, 1009 -  109 + -60*3, 1990, -60, 57, this.xqv, this.jumpY + 25 + this.kameKaioken, this.wqv + 30, this.hqv - 20)
                                     break;
                                 case 4:
-                                    ctx.drawImage(saitama180, 1009 -  113 + -60*4, 1990, -60, 57, this.xqv, this.jumpY + 25, this.wqv + 30, this.hqv - 20)
+                                    ctx.drawImage(saitama180, 1009 -  113 + -60*4, 1990, -60, 57, this.xqv, this.jumpY + 25 + this.kameKaioken, this.wqv + 30, this.hqv - 20)
                                     break;
                                 case 5:
-                                    ctx.drawImage(saitama180, 1009 -  113 + -60*5, 1990, -60, 57, this.xqv, this.jumpY + 25, this.wqv + 30, this.hqv - 20)
+                                    ctx.drawImage(saitama180, 1009 -  113 + -60*5, 1990, -60, 57, this.xqv, this.jumpY + 25 + this.kameKaioken, this.wqv + 30, this.hqv - 20)
                                     break;
                                 case 6:
-                                    ctx.drawImage(saitama180, 1009 -  113 + -50*6, 1990, -60, 57, this.xqv, this.jumpY + 25, this.wqv + 30, this.hqv - 20)
+                                    ctx.drawImage(saitama180, 1009 -  113 + -50*6, 1990, -60, 57, this.xqv, this.jumpY + 25 + this.kameKaioken, this.wqv + 30, this.hqv - 20)
                                     break;
                                 case 7:
-                                    ctx.drawImage(saitama180, 1009 -  113 + -60*7, 1990, -60, 57, this.xqv, this.jumpY + 25, this.wqv + 30, this.hqv - 20)
+                                    ctx.drawImage(saitama180, 1009 -  113 + -60*7, 1990, -60, 57, this.xqv, this.jumpY + 25 + this.kameKaioken, this.wqv + 30, this.hqv - 20)
                                     break;
                             }
                             // ctx.fillStyle ='red'
@@ -696,14 +703,14 @@ class QuaiVatKhongLo {
         this.wqvHP = this.wqv*wqvHP;
         this.QuaiVatDiChuyen();
         ctx.fillStyle = 'white';
-        ctx.fillRect(this.xqv, this.jumpY - 10, this.wqv, 10)
+        ctx.fillRect(this.xqv, this.jumpY - 10 + this.kameKaioken, this.wqv, 10)
       
         ctx.fillStyle = 'rgb(190, 10, 6)';
-        ctx.fillRect(this.xqv, this.jumpY - 10, this.wqvHP, 10)
+        ctx.fillRect(this.xqv, this.jumpY - 10 + this.kameKaioken, this.wqvHP, 10)
                 
         ctx.lineWidth = 2;
         ctx.fillStyle = 'black';
-        ctx.strokeRect(this.xqv, this.jumpY - 10, this.wqv, 10)
+        ctx.strokeRect(this.xqv, this.jumpY - 10 + this.kameKaioken, this.wqv, 10)
     }
     nhayGoku(jumpImg) { 
         this.jumpImg = jumpImg;  
@@ -834,16 +841,25 @@ class QuaiVatKhongLo {
 }
 var quaivat1 = new QuaiVatKhongLo( 0, 0, vitriCanvas.vitriYcanvas, 0, 0, 0, 0, 0, 0, 40, 0, 'quái vật');
 var quaivat2 = new QuaiVatKhongLo( 0, 0, vitriCanvas.vitriYcanvas, 0, 0, 0, 0, 0, 0, -120, 0, 'quái vật');
-var quaivat3 = new QuaiVatKhongLo( 0, 0, vitriCanvas.vitriYcanvas, 0, 0, 0, 0, 0, 0, 100, 0, 'quái vật');
+var quaivat3 = new QuaiVatKhongLo( 0, 0, vitriCanvas.vitriYcanvas, 0, 0, 0, 0, 0, 0, 30, 0, 'quái vật');
+var quaivat4 = new QuaiVatKhongLo( 0, 0, vitriCanvas.vitriYcanvas, 0, 0, 0, 0, 0, 0, -200, 0, 'quái vật');
+var quaivat5 = new QuaiVatKhongLo( 0, 0, vitriCanvas.vitriYcanvas, 0, 0, 0, 0, 0, 0, 100, 0, 'quái vật');
 
-quaivat1.TaoQuaiVat(310, 100, 160, canvas_width/2, 500, 6, 10, 20, 5);
-quaivat2.TaoQuaiVat(310, 100, 160, canvas_width/2, 500, 10, 6, 20, 3);
-quaivat3.TaoQuaiVat(310, 100, 160, canvas_width/2, 500, 5, 5, 20, 5);
+
+quaivat1.TaoQuaiVat(310, 100, 160, canvas_width/2, 5000, 12, 10, 11, 5);// máu, tốc chạy, dame , tốc đánh, fps
+quaivat2.TaoQuaiVat(310, 100, 160, canvas_width/2, 12000, 10, 6, 20, 3);
+quaivat3.TaoQuaiVat(310, 100, 160, canvas_width/2, 7000, 5, 15, 50, 5);
+quaivat4.TaoQuaiVat(310, 100, 160, canvas_width/2, 4000, 7, 20, 20, 2);
+quaivat5.TaoQuaiVat(310, 100, 160, canvas_width/2, 3000, 8, 7, 10, 4);
+
 
 var QuaiVatArr = [];
 QuaiVatArr.push(quaivat1);
 QuaiVatArr.push(quaivat2);
 QuaiVatArr.push(quaivat3);
+QuaiVatArr.push(quaivat4);
+QuaiVatArr.push(quaivat5);
+
 QuaiVatArr.forEach(quaivat => {
     quaivat.isJump = true;
 })
@@ -877,7 +893,8 @@ var dem0 = 0;
 var dem6 = 0;
 var dem7 = 0;
 var dem8 = 0;
-
+var dem9 = 0;
+var dem10 = 0;
 
 //
 var idx = 0;
@@ -905,7 +922,8 @@ var YKame;
 var KhoangCanhDayLui = 1;
 function animate() {
     ctx.clearRect(0, 0, canvas_width, canvas_height);
-    if (skills[5].ssjMod) KhoangCanhDayLui = 3;
+    var flipSsj = 0;
+    if (skills[5].ssjMod) KhoangCanhDayLui = 1.05;
     else if (skills[3].kaiokenMod) KhoangCanhDayLui = 1.75
     else KhoangCanhDayLui = 1
     if (skills[5].ssjMod) {
@@ -930,7 +948,9 @@ function animate() {
     if (flip === 0 || flip === 2) {
         if (doiChieuChua) {
             var doichieuSmooth = setInterval(() => {
-                anhnen1.startX -= 1;
+                ArrBkgr.forEach(anhnen => {
+                    anhnen.startX -= 1*anhnen.tocdo;
+                })
 
             }, 2)
             setTimeout(() => {
@@ -947,7 +967,10 @@ function animate() {
     else if (flip == 1 || flip == 3) { 
         if (doiChieuChua) {
             var doichieuSmooth = setInterval(() => {
-                anhnen1.startX += 1;
+                ArrBkgr.forEach(anhnen => {
+                    anhnen.startX += 1*anhnen.tocdo;
+                })
+
             }, 2)
             setTimeout(() => {
                 clearInterval(doichieuSmooth);
@@ -973,26 +996,26 @@ function animate() {
         if (flip === 0 || flip == 2) {
             switch (skills[3].frameXkok) {
                 case 0:
-                    ctx.drawImage(arrGokuImg[0], 130 + 50*skills[3].frameXkok, 2200, 80, 80, GokuLon0[0][0].vitriX - 59, Ychung - 40, 230, 160 + 40);
+                    ctx.drawImage(arrGokuImg[0], 130 + 50*skills[3].frameXkok, 2200, 80, 80, GokuLon0[0][0].vitriX - 59, Ychung - 60, 230, 160 + 40);
                     break;
                 case 1:
-                    ctx.drawImage(arrGokuImg[0], 167 + 50*skills[3].frameXkok, 2200, 80, 80, GokuLon0[0][0].vitriX - 59, Ychung - 40, 230, 160 + 40);
+                    ctx.drawImage(arrGokuImg[0], 167 + 50*skills[3].frameXkok, 2200, 80, 80, GokuLon0[0][0].vitriX - 59, Ychung - 60, 230, 160 + 40);
                     break;
                 case 2:
-                    ctx.drawImage(arrGokuImg[0], 205 + 50*skills[3].frameXkok, 2190, 100, 90, GokuLon0[0][0].vitriX - 79, Ychung - 40, 270, 180 + 40);
+                    ctx.drawImage(arrGokuImg[0], 205 + 50*skills[3].frameXkok, 2190, 100, 90, GokuLon0[0][0].vitriX - 79, Ychung - 70, 270, 180 + 40);
                     break;
             }
         }
         else if (flip == 1 || flip == 3) {
             switch (skills[3].frameXkok) {
                 case 0:
-                    ctx.drawImage(arrGokuImg[1], 1833 - 130 + -50*skills[3].frameXkok, 2200, -80, 80, GokuLon0[1][0].vitriX - 59, Ychung - 40, 230, 160 + 40);
+                    ctx.drawImage(arrGokuImg[1], 1833 - 130 + -50*skills[3].frameXkok, 2200, -80, 80, GokuLon0[1][0].vitriX - 59, Ychung - 60, 230, 160 + 40);
                     break;
                 case 1:
-                    ctx.drawImage(arrGokuImg[1], 1833 - 167 + -50*skills[3].frameXkok, 2200, -80, 80, GokuLon0[1][0].vitriX - 59, Ychung - 40, 230, 160 + 40);
+                    ctx.drawImage(arrGokuImg[1], 1833 - 167 + -50*skills[3].frameXkok, 2200, -80, 80, GokuLon0[1][0].vitriX - 59, Ychung - 60, 230, 160 + 40);
                     break;
                 case 2:
-                    ctx.drawImage(arrGokuImg[1], 1833 - 205 + -50*skills[3].frameXkok, 2190, -100, 90, GokuLon0[1][0].vitriX - 79, Ychung - 40, 270, 180 + 40);
+                    ctx.drawImage(arrGokuImg[1], 1833 - 205 + -50*skills[3].frameXkok, 2190, -100, 90, GokuLon0[1][0].vitriX - 79, Ychung - 70, 270, 180 + 40);
                     break;
             }
         }
@@ -1043,7 +1066,7 @@ function animate() {
         if (!skills[3].kaiokenMod && baynhanh) bkgrSpeed = layerspeed;
     }
     if (GokuLon0.kameha && isSkill2) {
-        if (!skills[5].ssjMod) {
+        if (!skills[5].ssjMod && !skills[3].kaiokenMod) {
             if (flip === 0 || flip == 2) {
                 if (SonGoKu.isJump) {
                     tocdokhunghinh = 3;
@@ -1061,8 +1084,8 @@ function animate() {
                 let dem3 = tocdokhunghinh*GokuLon[idx].soKhungHinh - 1;
                 let diemBatDau = 1;
                 // kame bay ra 
-                if (frameX2 == 0) kameYet = true;
                 if (frameX2 >= 4){
+                    kameYet = true;
                     diemBatDau = -209;
                     GokuLon0[flip][idx].chieurong = 105;
                     GokuLon0[0][3].kamejoko(kameXtienlen, YKame + 45);
@@ -1103,10 +1126,12 @@ function animate() {
                 if (frameX2 == 0) kameYet = true;
     
                 if (frameX2 >= 4){
+                    kameYet = true;
                     diemBatDau = 2040;
                     GokuLon0[flip][idx].chieurong = -105;
                     GokuLon0[flip][idx].kamejoko(kameXtienlen, YKame + 45);
                     kameXtienlen1 -= tocdoKameha;
+
                 }
                 else {
                     GokuLon0[flip][idx].chieurong = -53;
@@ -1130,7 +1155,7 @@ function animate() {
                 requestAnimationFrame(animate);
             }
         }
-        else {
+        if (skills[5].ssjMod) {
             if (flip === 0 || flip == 2 ) {
                 if (SonGoKu.isJump) {
                     tocdokhunghinh = 3;
@@ -1152,11 +1177,10 @@ function animate() {
                 let diemBatDau = 1;
                 // kame bay ra 
                 if (frameX2 == 0) {
-                    kameYet = true;
                     kameXtienlen22 = GokuLon0[0][3].kameX;
-
                 }
                 if (frameX2 >= 4){
+                    kameYet = true;
                     diemBatDau = -209;
                     GokuLon0[flip][idx].chieurong = 105;
                     GokuLon0[0][3].kamejoko(kameXtienlen, YKame + 45);
@@ -1167,10 +1191,10 @@ function animate() {
                 }
                 if (frameX2 >= 8) {
                     if (frameX2 == 8) {
-                        kameYet = true;
                         kameXtienlen2 = GokuLon0[0][3].kameX;
                     } 
                     if (frameX2 >= 13){
+                        kameYet = true;
                         diemBatDau = -1030;
                         kame2 = 83
                         GokuLon0[flip][idx].chieurong = 100;
@@ -1217,11 +1241,11 @@ function animate() {
                 let dem3 = 3*34 - 1;
                 let diemBatDau = 1832;
                 if (frameX2 == 0) {
-                    kameYet = true;
                     kameXtienlen33 = GokuLon0[1][3].kameX;
                 }
     
                 if (frameX2 >= 4){
+                    kameYet = true;
                     diemBatDau = 2040;
                     GokuLon0[flip][idx].chieurong = -105;
                     GokuLon0[1][3].kamejoko(kameXtienlen, YKame + 45);
@@ -1232,10 +1256,10 @@ function animate() {
                 }
                 if (frameX2 >= 8) {
                     if (frameX2 == 8) {
-                        kameYet = true;
                         kameXtienlen3 = GokuLon0[1][3].kameX;
                     }
                     if (frameX2 >= 13){
+                        kameYet = true;
                         diemBatDau =1833 - -1030;
                         kame2 = 83
                         GokuLon0[flip][idx].chieurong = -100;
@@ -1268,8 +1292,173 @@ function animate() {
                 requestAnimationFrame(animate);
             }
         }
-    console.log(kameXtienlen)
-
+        if (skills[3].kaiokenMod) {
+            if (flip === 0 || flip == 2 ) {
+                var kameXtienlen = kameXtienlen2;
+                isSkill3 = false;
+                isSkill4 = false;
+                isSkill5 = false;
+                if (dem10 >= 525/5*3) dem10 = 510/5*3;
+                let vitriFrameX2 = Math.floor(dem10/3) % 162;
+                frameX2 = vitriFrameX2;
+                let dem3 = 3*162 - 1;
+                // kame bay ra 
+                if (frameX2 >= 0 && frameX2 <= 10) {
+                    ctx.drawImage(arrGokuImg[flip],137 + 55*1, 2100, 55, 80, GokuLon0[flip][idx].vitriX, Ychung, 55*2, 80*2);
+                }
+                if (frameX2 >= 11 && frameX2 <= 20) {
+                    ctx.drawImage(arrGokuImg[flip],137 + 55*2, 2100, 55, 80, GokuLon0[flip][idx].vitriX, Ychung, 55*2, 80*2);
+                }
+                if (frameX2 >= 21 && frameX2 <= 30) {
+                    ctx.drawImage(arrGokuImg[flip],139 + 55*3, 2100, 55, 80, GokuLon0[flip][idx].vitriX, Ychung, 55*2, 80*2);
+                }
+                if (frameX2 >= 31 && frameX2 <= 40) {
+                    ctx.drawImage(arrGokuImg[flip],136 + 55*4, 2100, 55, 80, GokuLon0[flip][idx].vitriX, Ychung, 55*2, 80*2);
+                    if (frameX2 % 3 == 0 && dem9 % 8 == 0) ctx.drawImage(arrGokuImg[flip],345 + 55*4, 2220, 25, 35, GokuLon0[flip][idx].vitriX + 30, Ychung + 65, 30, 30);
+                }
+                if (frameX2 >= 41 && frameX2 <= 60) {
+                    ctx.drawImage(arrGokuImg[flip],133 + 55*5, 2100, 55, 80, GokuLon0[flip][idx].vitriX, Ychung, 55*2, 80*2);
+                    if (frameX2 % 2 == 0 && dem9 % 8 == 0)ctx.drawImage(arrGokuImg[flip],345 + 55*4, 2220, 25, 35, GokuLon0[flip][idx].vitriX + 5, Ychung + 60, 40, 40);
+                }
+                if (frameX2 >= 61 && frameX2 <= 101) {
+                    ctx.drawImage(arrGokuImg[flip],130 + 55*6, 2100, 55, 80, GokuLon0[flip][idx].vitriX, Ychung, 55*2, 80*2);
+                    if (frameX2 <= 80 && frameX2 % 8 == 0 && dem9 % 10 == 0) ctx.drawImage(arrGokuImg[flip],345 + 55*4, 2220, 25, 35, GokuLon0[flip][idx].vitriX, Ychung + 50, 55, 55);
+                    if (frameX2 >= 81 && dem9 % 10 == 0) ctx.drawImage(arrGokuImg[flip],345 + 55*4, 2220, 25, 35, GokuLon0[flip][idx].vitriX - 25, Ychung + 20, 100, 100);
+                }
+             
+                if (frameX2 == 102) {
+                    kameXtienlen2 += tocdoKameha;
+                    kameYet = true;
+                    ctx.drawImage(arrGokuImg[flip],135 + 55*7, 2100, 55, 80, GokuLon0[flip][idx].vitriX, Ychung, 55*2, 80*2);
+                    if (dem9 < 515/5*3) {
+                        ctx.drawImage(arrGokuImg[flip], 433 + 55*7, 2200, 55, 80, GokuLon0[flip][idx].vitriX + 70, Ychung - 45, 250, 250);
+                        ctx.drawImage(arrGokuImg[flip], 532 + 55*7, 2200, 35, 80, GokuLon0[flip][idx].vitriX + 265, Ychung - 45, 177, 250);
+                    } else if (dem9 >= 520/5*3)  {
+                        ctx.drawImage(arrGokuImg[flip], 433 + 55*7, 2200, 55, 80, GokuLon0[flip][idx].vitriX + 70, Ychung - 45, 250, 250);
+                        ctx.drawImage(arrGokuImg[flip], 495 + 55*7, 2200, 35, 80, GokuLon0[flip][idx].vitriX + 265, Ychung - 45, 400, 250);
+                    }
+                }
+                if (frameX2 == 103) {
+                    kameXtienlen2 += tocdoKameha;
+                    kameYet = true;
+                    ctx.drawImage(arrGokuImg[flip],142 + 55*8, 2100, 55, 80, GokuLon0[flip][idx].vitriX, Ychung, 55*2, 80*2);
+                    if (dem9 < 520/5*3) {
+                        ctx.drawImage(arrGokuImg[flip], 433 + 55*7, 2200, 55, 80, GokuLon0[flip][idx].vitriX + 70, Ychung - 45, 250, 250);
+                        ctx.drawImage(arrGokuImg[flip], 489 + 55*7, 2200, 35, 80, GokuLon0[flip][idx].vitriX + 265, Ychung - 45, 177, 250);
+                        ctx.drawImage(arrGokuImg[flip], 532 + 55*7, 2200, 35, 80, GokuLon0[flip][idx].vitriX + 400, Ychung - 45, 177, 250);
+                    } else if (dem9 >= 520/5*3) {
+                        ctx.drawImage(arrGokuImg[flip], 433 + 55*7, 2200, 55, 80, GokuLon0[flip][idx].vitriX + 70, Ychung - 45, 250, 250);
+                        ctx.drawImage(arrGokuImg[flip], 495 + 55*7, 2200, 35, 80, GokuLon0[flip][idx].vitriX + 265, Ychung - 45, 400, 250);
+                    }
+                }
+                if (frameX2 == 104) {
+                    kameXtienlen2 += tocdoKameha;
+                    kameYet = true;
+                    ctx.drawImage(arrGokuImg[flip],143 + 55*9, 2100, 55, 80, GokuLon0[flip][idx].vitriX, Ychung, 55*2, 80*2);
+                    ctx.drawImage(arrGokuImg[flip], 433 + 55*7, 2200, 55, 80, GokuLon0[flip][idx].vitriX + 70, Ychung - 45, 250, 250);
+                    ctx.drawImage(arrGokuImg[flip], 495 + 55*7, 2200, 35, 80, GokuLon0[flip][idx].vitriX + 265, Ychung - 45, 400, 250);
+                    
+                }
+                if (dem3 === dem9) {
+                    GokuLon0.kameha = false;
+                    kameXtienlen = GokuLon0[0][3].kameX
+                    idx = 0;
+                    if (isPress) idx = 1;
+                    isSkill3 = true;
+                    isSkill4 = true;
+                    isSkill5 = true;
+                    if (GokuLon0.flyFast) idx = 2;
+                    dem10 = -1;
+                    dem9 = -1;
+                }
+                dem9++;
+                dem10++;
+                requestAnimationFrame(animate);
+            }
+            else if (flip == 1 || flip == 3) {
+                var kameXtienlen = kameXtienlen3;
+                isSkill3 = false;
+                isSkill4 = false;
+                isSkill5 = false;
+                if (dem10 >= 525/5*3) dem10 = 510/5*3;
+                let vitriFrameX2 = Math.floor(dem10/3) % 162;
+                frameX2 = vitriFrameX2;
+                let dem3 = 3*162 - 1;
+                // kame bay ra 
+                if (frameX2 >= 0 && frameX2 <= 10) {
+                    ctx.drawImage(arrGokuImg[flip],1833 - 137 + -55*1, 2100, -55, 80, GokuLon0[flip][idx].vitriX, Ychung, 55*2, 80*2);
+                }
+                if (frameX2 >= 11 && frameX2 <= 20) {
+                    ctx.drawImage(arrGokuImg[flip],1833 - 137 + -55*2, 2100, -55, 80, GokuLon0[flip][idx].vitriX, Ychung, 55*2, 80*2);
+                }
+                if (frameX2 >= 21 && frameX2 <= 30) {
+                    ctx.drawImage(arrGokuImg[flip],1833 - 139 + -55*3, 2100, -55, 80, GokuLon0[flip][idx].vitriX, Ychung, 55*2, 80*2);
+                }
+                if (frameX2 >= 31 && frameX2 <= 40) {
+                    ctx.drawImage(arrGokuImg[flip],1833 - 136 + -55*4, 2100, -55, 80, GokuLon0[flip][idx].vitriX, Ychung, 55*2, 80*2);
+                    if (frameX2 % 3 == 0 && dem9 % 8 == 0) ctx.drawImage(arrGokuImg[flip],1833 - 345 + -55*4, 2220, -25, 35, GokuLon0[flip][idx].vitriX + 50, Ychung + 65, 30, 30);
+                }
+                if (frameX2 >= 41 && frameX2 <= 60) {
+                    ctx.drawImage(arrGokuImg[flip],1833 - 133 + -55*5, 2100, -55, 80, GokuLon0[flip][idx].vitriX, Ychung, 55*2, 80*2);
+                    if (frameX2 % 2 == 0 && dem9 % 8 == 0)ctx.drawImage(arrGokuImg[flip],1833 - 345 + -55*4, 2220, -25, 35, GokuLon0[flip][idx].vitriX + 55, Ychung + 60, 40, 40);
+                }
+                if (frameX2 >= 61 && frameX2 <= 101) {
+                    ctx.drawImage(arrGokuImg[flip],1833 - 130 + -55*6, 2100, -55, 80, GokuLon0[flip][idx].vitriX, Ychung, 55*2, 80*2);
+                    if (frameX2 <= 80 && frameX2 % 8 == 0 && dem9 % 10 == 0) ctx.drawImage(arrGokuImg[flip],1833 - 345 + -55*4, 2220, -25, 35, GokuLon0[flip][idx].vitriX + 55, Ychung + 50, 55, 55);
+                    if (frameX2 >= 81 && dem9 % 10 == 0) ctx.drawImage(arrGokuImg[flip],1833 - 345 + -55*4, 2220, -25, 35, GokuLon0[flip][idx].vitriX + 35, Ychung + 20, 100, 100);
+                }
+             
+                if (frameX2 == 102) {
+                    kameXtienlen2 += tocdoKameha;
+                    kameYet = true;
+                    ctx.drawImage(arrGokuImg[flip],1833 - 135 + -55*7, 2100, -55, 80, GokuLon0[flip][idx].vitriX, Ychung, 55*2, 80*2);
+                    if (dem9 < 515/5*3) {
+                        ctx.drawImage(arrGokuImg[1],1833 -  433 + -55*7, 2200, -55, 80, GokuLon0[1][idx].vitriX - 205, Ychung - 45, 250, 250);
+                        ctx.drawImage(arrGokuImg[1],1833 -  532 + -55*7, 2200, -35, 80, GokuLon0[1][idx].vitriX - 320, Ychung - 45, 177, 250);
+                    } 
+                    else if (dem9 >= 520/5*3)  {
+                        ctx.drawImage(arrGokuImg[flip],1833 -  433 + -55*7, 2200, -55, 80, GokuLon0[flip][idx].vitriX - 205, Ychung - 45, 250, 250);
+                        ctx.drawImage(arrGokuImg[flip],1833 -  495 + -55*7, 2200, -35, 80, GokuLon0[flip][idx].vitriX- 560, Ychung - 45, 400, 250);}
+                }
+                if (frameX2 == 103) {
+                    kameXtienlen2 += tocdoKameha;
+                    kameYet = true;
+                    ctx.drawImage(arrGokuImg[flip],1833 - 142 + -55*8, 2100, -55, 80, GokuLon0[flip][idx].vitriX, Ychung, 55*2, 80*2);
+                    if (dem9 < 520/5*3) {
+                        ctx.drawImage(arrGokuImg[flip],1833 -  433 + -55*7, 2200, -55, 80, GokuLon0[flip][idx].vitriX - 205, Ychung - 45, 250, 250);
+                        ctx.drawImage(arrGokuImg[flip],1833 -  489 + -55*7, 2200, -35, 80, GokuLon0[flip][idx].vitriX -320, Ychung - 45, 177, 250);
+                        ctx.drawImage(arrGokuImg[flip],1833 -  532 + -55*7, 2200, -35, 80, GokuLon0[flip][idx].vitriX -390, Ychung - 45, 177, 250);
+                    } else if (dem9 >= 520/5*3) {
+                        ctx.drawImage(arrGokuImg[flip],1833 -  433 + -55*7, 2200, -55, 80, GokuLon0[flip][idx].vitriX - 205, Ychung - 45, 250, 250);
+                        ctx.drawImage(arrGokuImg[flip],1833 -  495 + -55*7, 2200, -35, 80, GokuLon0[flip][idx].vitriX- 560, Ychung - 45, 400, 250);
+                    }
+                }
+                if (frameX2 == 104) {
+                    kameXtienlen2 += tocdoKameha;
+                    kameYet = true;
+                    ctx.drawImage(arrGokuImg[flip],1833 - 143 + -55*9, 2100, -55, 80, GokuLon0[flip][idx].vitriX , Ychung, 55*2, 80*2);
+                    ctx.drawImage(arrGokuImg[flip],1833 -  433 + -55*7, 2200, -55, 80, GokuLon0[flip][idx].vitriX - 205, Ychung - 45, 250, 250);
+                    ctx.drawImage(arrGokuImg[flip],1833 -  495 + -55*7, 2200, -35, 80, GokuLon0[flip][idx].vitriX- 560, Ychung - 45, 400, 250);
+                    
+                }
+                if (dem3 === dem9) {
+                    GokuLon0.kameha = false;
+                    kameXtienlen2 = GokuLon0[1][3].kameX
+                    idx = 0;
+                    if (isPress) idx = 1;
+                    isSkill3 = true;
+                    isSkill4 = true;
+                    isSkill5 = true;
+                    if (GokuLon0.flyFast) idx = 2;
+                    dem10 = -1;
+                    dem9 = -1;
+                }
+                dem9++;
+                dem10++;
+                requestAnimationFrame(animate);
+            }
+            console.log(kameXtienlen)
+        }  
     }
      // Đá ///////////////////////////////////////////////////////
     else if (GokuLon0.kick && isSkill3) {
@@ -1284,6 +1473,7 @@ function animate() {
                 frameX2 = vitriFrameX3
                 let dem3 = tocdokhunghinh*38 - 1;
                 if (frameX2 <= 3) {
+                    flipSsj = 0;
                     ctx.drawImage(arrGokuImg[flip], 13 + 55*frameX2, 895, 55, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 4) {
@@ -1343,8 +1533,9 @@ function animate() {
                     ctx.drawImage(arrGokuImg[flip], -80 + 57*frameX2, 895, 50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 >= 13 && frameX2 <= 15) {
+                    flipSsj = 1;
                     ArrBkgr.forEach(anhnen => {
-                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        if (anhnen.startX > anhnen.rong) anhnen.startX = 0;
                         anhnen.startX  += 10*anhnen.tocdo;
                     })
                     QuaiVatArr.forEach(quaivat => {
@@ -1353,8 +1544,9 @@ function animate() {
                     ctx.drawImage(arrGokuImg[1], 1833 - -705 + -55*frameX2, 450, -55, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 16) {
+                    flipSsj = 1;
                     ArrBkgr.forEach(anhnen => {
-                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        if (anhnen.startX > anhnen.rong) anhnen.startX = 0;
                         anhnen.startX  += 10*anhnen.tocdo;
                     })
                     QuaiVatArr.forEach(quaivat => {
@@ -1363,8 +1555,9 @@ function animate() {
                     ctx.drawImage(arrGokuImg[1], 1833 - -705 + -55*frameX2, 450, -65, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 17) {
+                    flipSsj = 1;
                     ArrBkgr.forEach(anhnen => {
-                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        if (anhnen.startX > anhnen.rong) anhnen.startX = 0;
                         anhnen.startX  += 10*anhnen.tocdo;
                     })
                     QuaiVatArr.forEach(quaivat => {
@@ -1373,21 +1566,26 @@ function animate() {
                     ctx.drawImage(arrGokuImg[1], 1833 - -686 + -55*frameX2, 450, -55, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 18) {
+                    flipSsj = 1;
                     ctx.drawImage(arrGokuImg[1], 1833 - -675 + -55*frameX2, 450, -65, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 19) {
+                    flipSsj = 1;
                     ctx.drawImage(arrGokuImg[1], 1833 - -660 + -55*frameX2, 450, -65, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 20) {
+                    flipSsj = 1;
                     ctx.drawImage(arrGokuImg[flip], -25 + 57*9, 895, 50, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 21) {
+                    flipSsj = 1;
                     sounds[11].play();
                     ctx.drawImage(arrGokuImg[flip], -30 + 57*10, 882, 50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 22) {
+                    flipSsj = 1;
                     ArrBkgr.forEach(anhnen => {
-                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        if (anhnen.startX > anhnen.rong) anhnen.startX = 0;
                         anhnen.startX  += 69*anhnen.tocdo;
                     })
                     QuaiVatArr.forEach(quaivat => {
@@ -1396,9 +1594,11 @@ function animate() {
                     ctx.drawImage(arrGokuImg[flip], -45 + 57*11, 882, 20, 80, GokuLon0[flip][idx].vitriX + 10, Ychung - 20, GokuLon0[flip][idx].chieurong * 2 - 60, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 23) {
+                    flipSsj = 1;
                     ctx.drawImage(arrGokuImg[flip], -80 + 57*12, 895, 50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 24) {
+                    flipSsj = 0;
                     ctx.drawImage(arrGokuImg[flip], 12 + 57*0, 780, 50, 80, GokuLon0[flip][idx].vitriX, Ychung - 3, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 25) {
@@ -1460,14 +1660,19 @@ function animate() {
                 }
                 ////
                 if (frameX2 == 33) {
+                    flipSsj = 1;
                     ctx.drawImage(arrGokuImg[1],1833 - 12 + -57*0, 1230, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 120, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 34) {
+                    flipSsj = 1;
+
                     ctx.drawImage(arrGokuImg[1], 1833 - 5 + -57*1, 1230, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 30, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 35) {
+                    flipSsj = 1;
+
                     ArrBkgr.forEach(anhnen => {
-                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        if (anhnen.startX > anhnen.rong) anhnen.startX = 0;
                         anhnen.startX  += 20*anhnen.tocdo;
                     })
                     QuaiVatArr.forEach(quaivat => {
@@ -1476,8 +1681,10 @@ function animate() {
                     ctx.drawImage(arrGokuImg[1],1833 - 0 -57*2, 1230, -60, 80, GokuLon0[flip][idx].vitriX, Ychung - 30, GokuLon0[flip][idx].chieurong * 2 + 10, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 36) {
+                    flipSsj = 1;
+
                     ArrBkgr.forEach(anhnen => {
-                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        if (anhnen.startX > anhnen.rong) anhnen.startX = 0;
                         anhnen.startX  += 20*anhnen.tocdo;
                     })
                     QuaiVatArr.forEach(quaivat => {
@@ -1486,8 +1693,10 @@ function animate() {
                     ctx.drawImage(arrGokuImg[1],1833 - 3 + -57*3, 1230, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 37) {
+                    flipSsj = 1;
+
                     ArrBkgr.forEach(anhnen => {
-                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        if (anhnen.startX > anhnen.rong) anhnen.startX = 0;
                         anhnen.startX  += 20*anhnen.tocdo;
                     })
                     QuaiVatArr.forEach(quaivat => {
@@ -1505,6 +1714,7 @@ function animate() {
                     isSkill2 = true;
                     isSkill4 = true;
                     isSkill5 = true;
+                    flip = 1;
                     if (GokuLon0.flyFast) idx = 2;
                 }
                 dem8++;
@@ -1519,11 +1729,13 @@ function animate() {
                 frameX2 = vitriFrameX3
                 let dem3 = tocdokhunghinh*38 - 1;
                 if (frameX2 <= 3) {
+                    flipSsj = 1;
                     ctx.drawImage(arrGokuImg[flip], 1833 - 13 + -55*frameX2, 895, -55, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 4) {
+                    flipSsj = 1;
                     ArrBkgr.forEach(anhnen => {
-                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        if (anhnen.startX > anhnen.rong) anhnen.startX = 0;
                         anhnen.startX  += 10*anhnen.tocdo;
                     })
                     QuaiVatArr.forEach(quaivat => {
@@ -1532,8 +1744,9 @@ function animate() {
                     ctx.drawImage(arrGokuImg[flip], 1833 -  8 + -57*frameX2, 895, -60, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 5) {
+                    flipSsj = 1;
                     ArrBkgr.forEach(anhnen => {
-                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        if (anhnen.startX > anhnen.rong) anhnen.startX = 0;
                         anhnen.startX  += 10*anhnen.tocdo;
                     })
                     QuaiVatArr.forEach(quaivat => {
@@ -1542,8 +1755,9 @@ function animate() {
                     ctx.drawImage(arrGokuImg[flip], 1833 -  15 + -57*frameX2, 895, -50, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 6) {
+                    flipSsj = 1;
                     ArrBkgr.forEach(anhnen => {
-                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        if (anhnen.startX > anhnen.rong) anhnen.startX = 0;
                         anhnen.startX  += 10*anhnen.tocdo;
                     })
                     QuaiVatArr.forEach(quaivat => {
@@ -1552,22 +1766,27 @@ function animate() {
                     ctx.drawImage(arrGokuImg[flip], 1833 -  5 + -57*frameX2, 895, -50, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 7) {
+                    flipSsj = 1;
                     ctx.drawImage(arrGokuImg[flip], 1833 -  -6 + -57*frameX2, 895, -45, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2 - 10, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 8) {
+                    flipSsj = 1;
                     ctx.drawImage(arrGokuImg[flip], 1833 -  -20 + -57*frameX2, 895, -50, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 9) {
+                    flipSsj = 1;
                     ctx.drawImage(arrGokuImg[flip], 1833 -  -25 + -57*frameX2, 895, -50, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 10) {
+                    flipSsj = 1;
                     sounds[11].play();
-
                     ctx.drawImage(arrGokuImg[flip], 1833 -  -30 + -57*frameX2, 882, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 11) {
+                    flipSsj = 1;
+
                     ArrBkgr.forEach(anhnen => {
-                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        if (anhnen.startX > anhnen.rong) anhnen.startX = 0;
                         anhnen.startX  += 69*anhnen.tocdo;
                     })
                     QuaiVatArr.forEach(quaivat => {
@@ -1576,9 +1795,12 @@ function animate() {
                     ctx.drawImage(arrGokuImg[flip], 1833 -  -45 + -57*frameX2, 882, -20, 80, GokuLon0[flip][idx].vitriX + 10, Ychung - 20, GokuLon0[flip][idx].chieurong * 2 - 60, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 12) {
+                    flipSsj = 1;
                     ctx.drawImage(arrGokuImg[flip], 1833 -  -80 + -57*frameX2, 895, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 >= 13 && frameX2 <= 15) {
+                    flipSsj = 0;
+                    flipSsj = 0;
                     ArrBkgr.forEach(anhnen => {
                         if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
                         anhnen.startX  -= 10*anhnen.tocdo;
@@ -1589,6 +1811,7 @@ function animate() {
                     ctx.drawImage(arrGokuImg[0],-705 + 55*frameX2, 450, 55, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 16) {
+                    flipSsj = 0;
                     ArrBkgr.forEach(anhnen => {
                         if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
                         anhnen.startX  -= 10*anhnen.tocdo;
@@ -1599,6 +1822,7 @@ function animate() {
                     ctx.drawImage(arrGokuImg[0],-705 + 55*frameX2, 450, 65, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 17) {
+                    flipSsj = 0;
                     ArrBkgr.forEach(anhnen => {
                         if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
                         anhnen.startX  -= 10*anhnen.tocdo;
@@ -1609,20 +1833,25 @@ function animate() {
                     ctx.drawImage(arrGokuImg[0],-686 + 55*frameX2, 450, 55, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 18) {
+                    flipSsj = 0;
                     ctx.drawImage(arrGokuImg[0], -675 + 55*frameX2, 450, 65, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 19) {
+                    flipSsj = 0;
                     ctx.drawImage(arrGokuImg[0],  -660 + 55*frameX2, 450, 65, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 20) {
+                    flipSsj = 0;
+
                     ctx.drawImage(arrGokuImg[flip], 1833 -  -25 + -57*9, 895, -50, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 21) {
                     sounds[11].play();
-
+                    flipSsj = 0;
                     ctx.drawImage(arrGokuImg[flip], 1833 -  -30 + -57*10, 882, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 22) {
+                    flipSsj = 0;
                     ArrBkgr.forEach(anhnen => {
                         if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
                         anhnen.startX  -= 69*anhnen.tocdo;
@@ -1633,17 +1862,21 @@ function animate() {
                     ctx.drawImage(arrGokuImg[flip], 1833 -  -45 + -57*11, 882, -20, 80, GokuLon0[flip][idx].vitriX + 10, Ychung - 20, GokuLon0[flip][idx].chieurong * 2 - 60, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 23) {
+                    flipSsj = 0;
                     ctx.drawImage(arrGokuImg[flip], 1833 -  -80 + -57*12, 895, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 24) {
+                    flipSsj = 1;
                     ctx.drawImage(arrGokuImg[flip], 1833 -  12 + -57*0, 780, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 3, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 25) {
+                    flipSsj = 1;
                     ctx.drawImage(arrGokuImg[flip], 1833 -  10 + -57*1, 780, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 3, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 26) {
+                    flipSsj = 1;
                     ArrBkgr.forEach(anhnen => {
-                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        if (anhnen.startX > anhnen.rong) anhnen.startX = 0;
                         anhnen.startX  += 10*anhnen.tocdo;
                     })
                     QuaiVatArr.forEach(quaivat => {
@@ -1652,8 +1885,9 @@ function animate() {
                     ctx.drawImage(arrGokuImg[flip], 1833 -  5 + -57*2, 780, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 3, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 27) {
+                    flipSsj = 1;
                     ArrBkgr.forEach(anhnen => {
-                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        if (anhnen.startX > anhnen.rong) anhnen.startX = 0;
                         anhnen.startX  += 20*anhnen.tocdo;
                     })
                     QuaiVatArr.forEach(quaivat => {
@@ -1662,8 +1896,9 @@ function animate() {
                     ctx.drawImage(arrGokuImg[flip], 1833 -  3 + -57*3, 780, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 3, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 28) {
+                    flipSsj = 1;
                     ArrBkgr.forEach(anhnen => {
-                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        if (anhnen.startX > anhnen.rong) anhnen.startX = 0;
                         anhnen.startX  += 10*anhnen.tocdo;
                     })
                     QuaiVatArr.forEach(quaivat => {
@@ -1672,16 +1907,19 @@ function animate() {
                     ctx.drawImage(arrGokuImg[flip], 1833 -  2 + -57*4, 780, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 3, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 29) {
+                    flipSsj = 1;
                     sounds[10].currentTime = 0;
                     ctx.drawImage(arrGokuImg[flip], 1833 -  -25 + -57*9, 895, -50, 80, GokuLon0[flip][idx].vitriX, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 30) {
+                    flipSsj = 1;
                     sounds[11].play();
                     ctx.drawImage(arrGokuImg[flip],  1833 - -30 + -57*10, 882, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 31) {
+                    flipSsj = 1;
                     ArrBkgr.forEach(anhnen => {
-                        if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
+                        if (anhnen.startX > anhnen.rong) anhnen.startX = 0;
                         anhnen.startX  += 69*anhnen.tocdo;
                     })
                     QuaiVatArr.forEach(quaivat => {
@@ -1690,18 +1928,22 @@ function animate() {
                     ctx.drawImage(arrGokuImg[flip], 1833 -  -37 + -57*11, 882, -20, 80, GokuLon0[flip][idx].vitriX + 10, Ychung - 20, GokuLon0[flip][idx].chieurong * 2 - 60, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 32) {
+                    flipSsj = 1;
                     sounds[11].currentTime = 0;
                     sounds[11].play();
                     ctx.drawImage(arrGokuImg[flip], 1833 -  -80 + -57*12, 895, -50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 ////
                 if (frameX2 == 33) {
+                    flipSsj = 0;
                     ctx.drawImage(arrGokuImg[0],25 - 12 + 57*0, 1230, 50, 80, GokuLon0[flip][idx].vitriX, Ychung - 120, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 34) {
+                    flipSsj = 0;
                     ctx.drawImage(arrGokuImg[0],5 - 5 + 57*1, 1230, 50, 80, GokuLon0[flip][idx].vitriX, Ychung - 30, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 35) {
+                    flipSsj = 0;
                     ArrBkgr.forEach(anhnen => {
                         if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
                         anhnen.startX  -= 20*anhnen.tocdo;
@@ -1712,6 +1954,7 @@ function animate() {
                     ctx.drawImage(arrGokuImg[0], 57*2, 1230, 60, 80, GokuLon0[flip][idx].vitriX, Ychung - 30, GokuLon0[flip][idx].chieurong * 2 + 10, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 36) {
+                    flipSsj = 0;
                     ArrBkgr.forEach(anhnen => {
                         if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
                         anhnen.startX  -= 20*anhnen.tocdo;
@@ -1722,6 +1965,7 @@ function animate() {
                     ctx.drawImage(arrGokuImg[0], 6- 3 + 57*3, 1230, 50, 80, GokuLon0[flip][idx].vitriX, Ychung - 20, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2)
                 }
                 if (frameX2 == 37) {
+                    flipSsj = 0;
                     ArrBkgr.forEach(anhnen => {
                         if (anhnen.startX < -anhnen.rong) anhnen.startX = 0;
                         anhnen.startX  -= 20*anhnen.tocdo;
@@ -1738,6 +1982,7 @@ function animate() {
                     dem8 = -1;
                     GokuLon0.kick = false;
                     idx = 0;
+                    flip = 0
                     isSkill2 = true;
                     isSkill4 = true;
                     isSkill5 = true;
@@ -2934,11 +3179,19 @@ function animate() {
     }
     //////////// quái vật và tấn công và máu
     SonGoKu.DrawAvtHP(avtGoku, SonGoKu.PlayerHP/SonGoKu.PlayerHPGoc);
-    SonGoKu.drawtancong(50, 70, flip, Ychung + 65);
+    if (skills[5].ssjMod && GokuLon0.kick) {
+        if (flipSsj == 0) SonGoKu.drawtancong(200, 70, flipSsj, Ychung + 65, 80);
+        else {
+            SonGoKu.drawtancong(200, 70, flipSsj, Ychung + 65, 90);
+        }
+    }
+    else  SonGoKu.drawtancong(50, 70, flip, Ychung + 65, 0);
+
     // COMENT QUÁI VẬT
 // ////////////////////////////////
     QuaiVatArr.forEach(quaivat => {
         if (quaivat.isLive) {
+            quaivat.kameKaioken = 0;
             if (!quaivat.isJump) quaivat.randomJump();
             quaivat.VeQuaiVat(quaivat.hp/quaivat.thanhHP);
             quaivat.nhay();
@@ -2947,28 +3200,46 @@ function animate() {
             quaivat.HoiSinh();
         }
         ///////// GÂY SÁT THƯƠNG
-        if (SonGoKu.xtc - 25 <= quaivat.xqv + quaivat.wqv && quaivat.xqv + quaivat.wqv <= 45 + 385 && flip == 1) {
-            /// kameha
-            if (GokuLon0.kameha && YKame + 75 >= quaivat.jumpY && YKame + 75 <= quaivat.jumpY + quaivat.hqv) {
-                quaivat.hp -= 50*skills[2].dameKOKkame*skills[5].dameSSJ;
-                kameYet = false;
+           /// kameha VÀ TẦM XA TRÁI
+        if (kameYet && kameXtienlen - 60 <= quaivat.xqv + quaivat.wqv && YKame + 75 >= quaivat.jumpY && YKame + 75 <= quaivat.jumpY + quaivat.hqv && flip == 1 || flip == 3) {
+            if (skills[3].kaiokenMod) {
+                quaivat.hp -= 50;
+                if (quaivat.kameKaioken >= -60) quaivat.kameKaioken--;
+                if (quaivat.xqv >= -300) {
+                    let dayluiquaivat = setInterval(() => {
+                        quaivat.xqv -= 1.05*KhoangCanhDayLui;
+                    }, 10)
+                    setTimeout(() => {
+                        clearInterval(dayluiquaivat)
+                    }, 300);
+                }            }
+            else {
+                quaivat.hp -= 4*skills[2].dameKOKkame*skills[5].dameSSJ;
                 let dayluiquaivat = setInterval(() => {
-                    quaivat.xqv -= 8*KhoangCanhDayLui;
+                    quaivat.xqv -= 1;
                 }, 10)
                 setTimeout(() => {
                     clearInterval(dayluiquaivat)
                 }, 300)
+                kameYet = false;
             }
-            // đá
-            else if (GokuLon0.kick && SonGoKu.ytc + SonGoKu.htc <= quaivat.jumpY + quaivat.hqv + SonGoKu.htc && SonGoKu.ytc + SonGoKu.htc >= quaivat.jumpY) {
+        }
+        if (SonGoKu.xtc - 25 <= quaivat.xqv + quaivat.wqv && quaivat.xqv + quaivat.wqv <= 45 + 385 && flip == 1 || flip == 3) {
+            // đá, tầm gần trái
+            if (GokuLon0.kick && SonGoKu.ytc + SonGoKu.htc <= quaivat.jumpY + quaivat.hqv + SonGoKu.htc && SonGoKu.ytc + SonGoKu.htc >= quaivat.jumpY) {
                 if (GokuLon0.kick && skills[5].ssjMod) {
                     quaivat.hp -= skills[2].dame*skills[5].dameSSJ*15;
-                    let dayluiquaivat = setInterval(() => {
-                        quaivat.xqv -= 2*KhoangCanhDayLui;
-                    }, 100)
-                    setTimeout(() => {
-                        clearInterval(dayluiquaivat)
-                    }, 300)
+                    if (skills[5].ssjMod) {
+                        quaivat.xqv = canvas_width/2
+                    }
+                    else {
+                        let dayluiquaivat = setInterval(() => {
+                            quaivat.xqv -= 2*KhoangCanhDayLui;
+                        }, 100)
+                        setTimeout(() => {
+                            clearInterval(dayluiquaivat)
+                        }, 300)
+                    }
                 }
                 else {
                     quaivat.hp -= skills[2].dame*skills[5].dameSSJ;
@@ -2981,33 +3252,53 @@ function animate() {
                 }
             }
         }
-        if (SonGoKu.xtc + 80 + SonGoKu.wtc >= quaivat.xqv && quaivat.xqv >= 45 + 385 && flip == 0) {
-            //kameha
-            if (GokuLon0.kameha && YKame + 75 >= quaivat.jumpY && YKame + 75 <= quaivat.jumpY + quaivat.hqv) {
-                quaivat.hp -= 50*skills[2].dameKOKkame*skills[5].dameSSJ;
-                kameYet = false;
+                // kameha và TẦM XA
+        if (kameYet && kameXtienlen + 120 >= quaivat.xqv && YKame + 75 >= quaivat.jumpY && YKame + 75 <= quaivat.jumpY + quaivat.hqv && flip == 0 || flip == 2) {
+            if (skills[3].kaiokenMod) {
+                quaivat.hp -= 50;
+                if (quaivat.kameKaioken >= -60) quaivat.kameKaioken--;
+                if (quaivat.xqv <= 1200) {
+                    let dayluiquaivat = setInterval(() => {
+                        quaivat.xqv += 1
+                    }, 10)
+                    setTimeout(() => {
+                        clearInterval(dayluiquaivat)
+                    }, 300);
+                }
+            }
+            else {
+                quaivat.hp -= 4*skills[2].dameKOKkame*skills[5].dameSSJ;
                 let dayluiquaivat = setInterval(() => {
-                    quaivat.xqv += 8*KhoangCanhDayLui;
+                    quaivat.xqv += 1.05*KhoangCanhDayLui;
                 }, 10)
                 setTimeout(() => {
                     clearInterval(dayluiquaivat)
                 }, 300)
+                kameYet = false;
             }
-            // đá
-            else if (GokuLon0.kick && SonGoKu.ytc + SonGoKu.htc <= quaivat.jumpY + quaivat.hqv + SonGoKu.htc && SonGoKu.ytc + SonGoKu.htc >= quaivat.jumpY) {
+        }
+
+        if (SonGoKu.xtc + 80 + SonGoKu.wtc >= quaivat.xqv && quaivat.xqv >= 45 + 385 && flip == 0 || flip == 2) {
+            // đá, tầm gần
+            if (GokuLon0.kick && SonGoKu.ytc + SonGoKu.htc <= quaivat.jumpY + quaivat.hqv + SonGoKu.htc && SonGoKu.ytc + SonGoKu.htc >= quaivat.jumpY) {
                 if (GokuLon0.kick && skills[5].ssjMod) {
                     quaivat.hp -= skills[2].dame*skills[5].dameSSJ*15;
-                    let dayluiquaivat = setInterval(() => {
-                        quaivat.xqv -= 2*KhoangCanhDayLui;
-                    }, 100)
-                    setTimeout(() => {
-                        clearInterval(dayluiquaivat)
-                    }, 300)
+                    if (skills[5].ssjMod) {
+                        quaivat.xqv = canvas_width/2
+                    }
+                    else {
+                        let dayluiquaivat = setInterval(() => {
+                            quaivat.xqv += 2*KhoangCanhDayLui;
+                        }, 100)
+                        setTimeout(() => {
+                            clearInterval(dayluiquaivat)
+                        }, 300)
+                    }   
                 }
                 else {
                     quaivat.hp -= skills[2].dame*skills[5].dameSSJ;
                     let dayluiquaivat = setInterval(() => {
-                        quaivat.xqv -= 2*KhoangCanhDayLui;
+                        quaivat.xqv += 2*KhoangCanhDayLui;
                     }, 100)
                     setTimeout(() => {
                         clearInterval(dayluiquaivat)
@@ -3015,6 +3306,7 @@ function animate() {
                 }
             }
         }
+        // console.log(quaivat.xqv + " + " + quaivat.hp)
     })
     
     /////////////
@@ -3083,7 +3375,7 @@ document.addEventListener('keydown', function(e) {
                 }, 50);
                 setTimeout(() => {
                     clearInterval(demnguoc);
-                }, 2000);
+                }, 1000);
             }
             idx = 2;     
             isPress = true;
@@ -3156,7 +3448,12 @@ document.addEventListener('keydown', function(e) {
                     clearInterval(kamehassj);
                 }, 1600);
             }
-                sounds[0].play();
+                if (!skills[3].kaiokenMod) sounds[0].play();
+                else {
+                    setTimeout(() => {
+                        sounds[12].play();
+                    }, 700)
+                }
                 // sounds[4].play();
             GokuLon0.kameha = true;
             skills[1].hoiChieu();
@@ -3284,7 +3581,7 @@ document.addEventListener('keyup', function(e) {
                                     isPress = false;
                                     Chay = false;
                                     idx = 0;
-                                    layerspeed = 8;
+                                    bkgrSpeed = 8;
                                     isKeyUpFly = true;
                                     baynhanh = true;
                                 }, 200)
