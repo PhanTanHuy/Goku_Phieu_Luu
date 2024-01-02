@@ -16,7 +16,16 @@ document.addEventListener('keydown', function() {
     nhacnen.currentTime = 0;
     nhacnen.play();
 })
-
+// vẽ
+var dem5 = 0;
+var dem2 = 0;
+var dem1 = 0; 
+var dem0 = 0;
+var dem6 = 0;
+var dem7 = 0;
+var dem8 = 0;
+var dem9 = 0;
+var dem10 = 0;
 var sounds = [
     new Audio('./sound/kamehaCut3.mp3'),
     new Audio('./sound/kick2.mp3'),
@@ -68,7 +77,7 @@ canvas.addEventListener('click', function(e) {
 
 // tạo mảng lưu 2 ảnh bự
 var arrGokuImg = [];
-var imgPaths = ['GokuLonlarge.png', 'GokuLon180large.png', 'GokuLonSSJ2.png', 'GokuLonSSJ2180.png'];
+var imgPaths = ['GokuLonlarge.png', 'GokuLon180large.png', 'GokuLonSSJ2.png', 'GokuLonSSJ2180.png', 'gokussj3.png'];
 imgPaths.forEach(function(path) {
     var gokuImg = new Image();
     gokuImg.src = path;
@@ -175,7 +184,7 @@ var skills = [
     {
         tenSkill: 'Kaioken',
         isUse: true,
-        tgHoiChieu: 20,
+        tgHoiChieu: 30,
         kaiokenMod: false,
         demkok: 0,
         frameXkok: 0,
@@ -183,20 +192,22 @@ var skills = [
         hoiChieu: function() {
             setTimeout(() => {
                 skills[3].isUse = true;
-                skill5.classList.remove('hoichieu');
                 console.log(skills[3].isUse + 'đã hồi kaioken');
-            }, 20000)
+            }, 30000)
         },
         tatKaiokenMod: function() {
             setTimeout(() => {
                 skills[3].kaiokenMod = false;
                 skills[3].sangsanKOK = false;
                 skills[3].demkok = 0;
+                skill5.classList.remove('hoichieu');
                 skills[2].dame /= skills[2].dameKOK;
                 skills[2].dameKOKkame /= 2.5;
+                dem10 = 0;
+                dem9 = 0;
                 console.log('đã hết duy trì Kaioken');
                 layerspeed = 8;
-            }, 10000)
+            }, 20000)
         },
     },
 /////////////////////////////////
@@ -885,16 +896,7 @@ var isSkill5 = true;
 var isPress = false;
 var bkgrX = 0;
 var idxBkgr = 0;
-// vẽ
-var dem5 = 0;
-var dem2 = 0;
-var dem1 = 0; 
-var dem0 = 0;
-var dem6 = 0;
-var dem7 = 0;
-var dem8 = 0;
-var dem9 = 0;
-var dem10 = 0;
+
 
 //
 var idx = 0;
@@ -1291,6 +1293,8 @@ function animate() {
                 dem2++;
                 requestAnimationFrame(animate);
             }
+            let frameX3 = Math.floor(dem2/tocdokhunghinh)%4
+            ctx.drawImage(arrGokuImg[4],592 + 45*frameX3, 410, 45, 70, GokuLon0[1][0].vitriX + 20, SonGoKu.jumpY, 45*2, 70*2 );
         }
         if (skills[3].kaiokenMod) {
             if (flip === 0 || flip == 2 ) {
@@ -1991,6 +1995,8 @@ function animate() {
                 dem8++;
                 requestAnimationFrame(animate);
             }
+            let frameX3 = Math.floor(dem8/tocdokhunghinh)%4
+            ctx.drawImage(arrGokuImg[4],592 + 45*frameX3, 410, 45, 70, GokuLon0[1][0].vitriX + 20, SonGoKu.jumpY, 45*2, 70*2 );
         }
         else if (!skills[3].kaiokenMod) {
             if (flip === 0 || flip == 2) {
@@ -2559,7 +2565,6 @@ function animate() {
             }
             ctx.drawImage(arrGokuImg[flip], diemBatDau + GokuLon0[flip][idx].chieurong * frameX2, GokuLon0[flip][idx].SpaceFrameY, GokuLon0[flip][idx].chieurong, GokuLon0[flip][idx].chieucao, GokuLon0[flip][idx].vitriX - 30, Ychung, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2);
             dem7++;
-            ;
             requestAnimationFrame(animate);
         }
     }
@@ -3124,11 +3129,12 @@ function animate() {
             ctx.drawImage(arrGokuImg[flip], Xssj + frameX2*ssjRONG, Yssj, rongSsj, caoSsj, XssjCanvas, YssjCanvas,  ssjRONG* Wssj, HssjCanvas);
            
         }
+        let frameX3 = Math.floor(dem5/tocdokhunghinh)%4
+        ctx.drawImage(arrGokuImg[4],592 + 45*frameX3, 410, 45, 70, GokuLon0[1][0].vitriX + 20, SonGoKu.jumpY, 45*2, 70*2 );
         dem5++;
         requestAnimationFrame(animate);
     }
-    else {
-        
+    else {      
         if (!SonGoKu.isJump) {
             for(let i=0; i<QuaiVatArr.length; i++) {
                 if (QuaiVatArr[i].isqvAT) {
@@ -3152,6 +3158,8 @@ function animate() {
                 else {
                     ctx.drawImage(arrGokuImg[flip], 1825 + -45*frameX , 22, -50, GokuLon0[flip][idx].chieucao, GokuLon0[flip][idx].vitriX, SonGoKu.jumpY, 50 * 2 , GokuLon0[flip][idx].chieucao * 2);
                 }
+                let frameX3 = Math.floor(dem/tocdokhunghinh)%4
+                ctx.drawImage(arrGokuImg[4],592 + 45*frameX3, 410, 45, 70, GokuLon0[1][0].vitriX + 5, SonGoKu.jumpY, 45*2, 70*2 );
             }
             else { 
                 if (!isQvAttack) ctx.drawImage(arrGokuImg[flip], GokuLon0[flip][idx].fristPX + GokuLon0[flip][idx].chieurong * frameX, GokuLon0[flip][idx].SpaceFrameY, GokuLon0[flip][idx].chieurong, GokuLon0[flip][idx].chieucao, GokuLon0[flip][idx].vitriX, SonGoKu.jumpY, GokuLon0[flip][idx].chieurong * 2, GokuLon0[flip][idx].chieucao * 2);   
@@ -3502,7 +3510,7 @@ document.addEventListener('keydown', function(e) {
             }, 50);
             setTimeout(() => {
                 clearInterval(demnguoc);
-            }, 20000);
+            }, 30000);
 
             if (isSkill4) sounds[5].play();
             skills[3].sangsanKOK = true;
